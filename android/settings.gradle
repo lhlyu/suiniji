@@ -1,0 +1,39 @@
+// settings.gradle 用于配置和管理gradle插件和项目设置
+
+// 插件管理
+pluginManagement {
+    // 获取flutter的sdk路径
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        return flutterSdkPath
+    }
+
+    // 赋值给 Gradle 设置的一个扩展属性 flutterSdkPath
+    settings.ext.flutterSdkPath = flutterSdkPath()
+
+    // 将 Flutter 工具的 Gradle 项目包含到构建中
+    includeBuild("${settings.ext.flutterSdkPath}/packages/flutter_tools/gradle")
+
+    // 定义了 Gradle 项目构建时将会从哪些仓库下载依赖
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    // Flutter Gradle 插件
+    plugins {
+        id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
+    }
+}
+
+//  Flutter 插件加载器和 Android 应用插件
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "7.3.0" apply false
+}
+
+include ":app"

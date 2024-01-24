@@ -1,0 +1,105 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+
+def parseVersion() {
+    def pubspec = new File("../pubspec.yaml")
+    def lines = pubspec.readLines()
+    def versionLine = lines.find { it.startsWith("version:") }
+    def version = versionLine.split(" ")[1].trim()
+
+    def versionParts = version.split("\\+")
+    def versionName = versionParts[0]
+    def versionCode = versionParts.length > 1 ? versionParts[1].toInteger() : null
+
+    return [versionName, versionCode]
+}
+
+def (flutterVersionName, flutterVersionCode) = parseVersion()
+
+android {
+    namespace "com.lhlyu.flutter_template"
+
+    compileSdkVersion 34
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+    }
+
+
+    // 分开打包
+    splits {
+        abi {
+            enable true
+            reset()
+            include  'arm64-v8a', 'armeabi-v7a' // , 'x86', 'x86_64', 'armeabi', 'mips', 'mips64'
+            universalApk true
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.lhlyu.flutter_template"
+        
+        // 这里设置成19打出的包很小，
+        minSdkVersion 19
+        targetSdkVersion 34
+        versionCode flutterVersionCode
+        versionName flutterVersionName
+
+        resConfigs "zh"
+
+//        ndk {
+//            abiFilters "arm64-v8a"
+//        }
+
+    }
+
+    signingConfigs {
+        debug {
+
+        }
+        release {
+            // 都从环境变量获取值，也可以改成通过文件获取
+            keyAlias System.getenv("KEYSTORE_KEY_ALIAS")
+            keyPassword System.getenv("KEYSTORE_KEY_PASSWORD")
+            storeFile file(System.getenv("KEYSTORE_FILE"))
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+        }
+        release {
+            // 签名配置
+            signingConfig signingConfigs.release
+            // 移除没用的代码
+            shrinkResources true
+            // 压缩代码
+            minifyEnabled true
+
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+}
+
+flutter {
+    source "../.."
+}
+
+dependencies {}

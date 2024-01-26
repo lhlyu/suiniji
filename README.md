@@ -5,7 +5,6 @@
 1. `flutter pub get`
 2. `dart run build_runner build`
 
-
 ## 参考
 
 - [flutter整洁架构](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)

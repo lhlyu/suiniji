@@ -21,7 +21,7 @@ def parseVersion() {
 def (flutterVersionName, flutterVersionCode) = parseVersion()
 
 android {
-    namespace "com.lhlyu.flutter_template"
+    namespace "com.lhlyu.suiniji"
 
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
@@ -51,7 +51,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.lhlyu.flutter_template"
+        applicationId "com.lhlyu.suiniji"
         
         // 这里设置成19打出的包很小，
         minSdkVersion 19

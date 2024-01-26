@@ -1,59 +1,50 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_template/provider/app_provider.dart';
-import 'package:flutter_template/routes/app_router.dart';
-import 'package:flutter_template/utils/app_info.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:suiniji/src/app.dart';
+import 'package:suiniji/src/app_startup.dart';
 
 void main() async {
   /// 这行代码的作用是确保 Flutter 的 widget 绑定已经初始化
   WidgetsFlutterBinding.ensureInitialized();
 
-  await AppInfo().init();
+  // 异常处理
+  registerErrorHandlers();
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    ProviderScope(
+      child: DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => AppStartupWidget(
+          onLoaded: (context) => const App(),
+        ),
+      ), // Wrap your app
+    ),
+  );
 }
 
-class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+void registerErrorHandlers() {
+  /// 如果发生任何未捕获的异常，则显示一些错误UI
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    debugPrint(details.toString());
+  };
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    /// 获取router
-    final appRouter = AppRouter();
+  /// 处理来自底层平台/OS的错误
+  PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+    debugPrint(error.toString());
+    return true;
+  };
 
-    final app = ref.watch(appProvider);
-
-    return MaterialApp.router(
-      routerConfig: appRouter.router,
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
-        splashColor: Colors.transparent,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-        ),
+  /// 当应用程序中的任何小部件无法构建时显示一些错误UI
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: const Text('发生了一些小意外'),
       ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.black,
-        splashColor: Colors.transparent,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.black,
-          elevation: 0,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-        ),
-      ),
-      themeMode: app.firstWhere((v) => v.name == 'theme').enable ? ThemeMode.dark : ThemeMode.light,
+      body: Center(child: Text(details.toString())),
     );
-  }
+  };
 }

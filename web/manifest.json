@@ -1,11 +1,11 @@
 {
-    "name": "flutter_template",
-    "short_name": "flutter_template",
+    "name": "suiniji",
+    "short_name": "suiniji",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "一款不一样的记事本",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

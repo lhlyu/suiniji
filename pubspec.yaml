@@ -1,5 +1,5 @@
-name: flutter_template
-description: "A new Flutter project."
+name: suiniji
+description: 一款不一样的记事本
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -41,6 +41,7 @@ dependencies:
 
   device_info_plus: ^9.1.1
   package_info_plus: ^5.0.1
+  device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:

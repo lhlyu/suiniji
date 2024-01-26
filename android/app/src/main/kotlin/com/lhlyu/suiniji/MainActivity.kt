@@ -1,4 +1,4 @@
-package com.lhlyu.flutter_template
+package com.lhlyu.suiniji
 
 import io.flutter.embedding.android.FlutterActivity
 

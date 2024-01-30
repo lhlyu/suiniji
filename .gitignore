@@ -49,3 +49,5 @@ app.*.map.json
 *.g.dart
 
 flutter_cli_config.yaml
+.vscode/launch.json
+.vscode/tasks.json

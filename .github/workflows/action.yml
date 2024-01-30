@@ -19,22 +19,22 @@ jobs:
 
     strategy:
       matrix:
-        type: [ macos, windows, android ]
+        type: [ android ]
         include:
           # - type: web
           #   os: macos-latest
           #   path: build
           #   output: web
 
-          - type: macos
-            os: macos-latest
-            path: build/macos/Build/Products/Release
-            output: ${{ github.event.repository.name }}.app
+          # - type: macos
+          #   os: macos-latest
+          #   path: build/macos/Build/Products/Release
+          #   output: ${{ github.event.repository.name }}.app
 
-          - type: windows
-            os: windows-latest
-            path: build\windows\x64\runner
-            output: Release
+          # - type: windows
+          #   os: windows-latest
+          #   path: build\windows\x64\runner
+          #   output: Release
 
           # - type: linux
           #   os: ubuntu-latest
@@ -150,7 +150,7 @@ jobs:
       - name: 上传到蒲公英(android)
         if: ${{ matrix.type == 'android' }}
         run: |
-          cp ./build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ./${{ github.event.repository.name }}.apk
+          cp ./build/app/outputs/flutter-apk/app-release.apk ./${{ github.event.repository.name }}.apk
           ./pgyer_upload.sh -k ${{ secrets.PGY_API_KEY }} ./${{ github.event.repository.name }}.apk
 
       - name: Release

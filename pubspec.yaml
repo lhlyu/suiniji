@@ -22,7 +22,7 @@ dependencies:
   # 状态管理
 
   # app升级库
-  upgrader: ^8.4.0
+  upgrader: ^9.0.0
 
   # 数据类 / 联合体 / 模式匹配 / 克隆的代码生成器
   freezed_annotation: ^2.4.1
@@ -39,16 +39,32 @@ dependencies:
   flutter_hooks: ^0.20.4
   riverpod_annotation: ^2.3.3
 
+  # 设备信息
   device_info_plus: ^9.1.1
   package_info_plus: ^5.0.1
+  
+  # 设备预览
   device_preview: ^1.1.0
+
+  # 打开链接
+  url_launcher: ^6.2.4
+
+  # 内置的webview: https://inappwebview.dev/docs/intro/
+  flutter_inappwebview: ^6.0.0
+
+  # 响应式尺寸
+  responsive_sizer: ^3.3.0+1
+  # 国际化
+  flutter_localizations:
+    sdk: flutter
+  permission_handler: ^11.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # flutter 规范
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   # 代码生成工具
   build_runner: ^2.4.7
   # freezed 工具

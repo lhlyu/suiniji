@@ -1,13 +1,16 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:suiniji/src/app.dart';
 import 'package:suiniji/src/app_startup.dart';
 
 void main() async {
   /// 这行代码的作用是确保 Flutter 的 widget 绑定已经初始化
   WidgetsFlutterBinding.ensureInitialized();
+  //滚动性能优化 1.22.0
+  GestureBinding.instance.resamplingEnabled = true;
 
   // 异常处理
   registerErrorHandlers();
@@ -15,11 +18,11 @@ void main() async {
   runApp(
     ProviderScope(
       child: DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: kIsWeb && false,
         builder: (context) => AppStartupWidget(
           onLoaded: (context) => const App(),
         ),
-      ), // Wrap your app
+      ),
     ),
   );
 }
@@ -41,7 +44,7 @@ void registerErrorHandlers() {
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black87,
         title: const Text('发生了一些小意外'),
       ),
       body: Center(child: Text(details.toString())),

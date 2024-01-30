@@ -12,3 +12,6 @@
 - [一个整洁架构的项目](https://github.com/shirvanie/flutter_messenger_clean_architecture)
 - [flutter-app-architecture-riverpod](https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/)
 - [complete-flutter-course](https://github.com/bizz84/complete-flutter-course)
+- [lottie](https://lottiefiles.com/)
+- [菜单](https://docs.flutter.dev/release/breaking-changes/context-menus)
+- [样式生成](https://rydmike.com/flexcolorscheme/themesplayground-latest/)

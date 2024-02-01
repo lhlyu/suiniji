@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:suiniji/src/constants/constant.dart';
+import 'package:suiniji/src/commons/constant.dart';
 import 'package:suiniji/src/widgets/link_text/link_text.dart';
 
 class LoginPage extends StatelessWidget {
@@ -14,6 +14,8 @@ class LoginPage extends StatelessWidget {
 
   /// 电话输入框
   Widget _buildPhoneInput(BuildContext context) {
+    TextEditingController controller = TextEditingController();
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
       height: _containerHeight,
@@ -23,6 +25,7 @@ class LoginPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
+        controller: controller,
         style: Theme.of(context).textTheme.bodyMedium,
         keyboardType: TextInputType.phone,
         maxLength: 13,
@@ -39,6 +42,7 @@ class LoginPage extends StatelessWidget {
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]+')),
           CustomTextInputFormatter(),
         ],
+        maxLengthEnforcement: MaxLengthEnforcement.none,
       ),
     );
   }
@@ -49,7 +53,7 @@ class LoginPage extends StatelessWidget {
       onPressed: () {},
       style: TextButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.blue[900] : Colors.blueAccent[700],
+        backgroundColor: Theme.of(context).primaryColor,
         textStyle: TextStyle(
           fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
         ),
@@ -139,8 +143,6 @@ class LoginPage extends StatelessWidget {
           children: [
             _buildPhoneInput(context),
             const SizedBox(height: 16),
-            _buildPhoneInput(context),
-            const SizedBox(height: 16),
             _buildCaptchaButton(context),
             _buildPasswordButton(context),
             _buildAgreement(context),
@@ -157,6 +159,10 @@ class CustomTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     String newText = newValue.text.replaceAll(' ', '');
+    if (newText.length >= 11) {
+      newText = newText.substring(0, 11);
+      HapticFeedback.vibrate();
+    }
     StringBuffer buffer = StringBuffer();
     for (int i = 0; i < newText.length; i++) {
       if (i == 3 || i == 7) {

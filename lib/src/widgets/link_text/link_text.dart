@@ -32,8 +32,8 @@ class LinkText extends StatelessWidget {
           context,
           text,
           linkStyle ??
-              const TextStyle(
-                color: Colors.blueAccent,
+              TextStyle(
+                color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.w600,
               ),
         ),

@@ -9,10 +9,14 @@ import 'package:suiniji/src/app_startup.dart';
 void main() async {
   /// 这行代码的作用是确保 Flutter 的 widget 绑定已经初始化
   WidgetsFlutterBinding.ensureInitialized();
-  //滚动性能优化 1.22.0
+
+  /// 滚动性能优化 1.22.0
   GestureBinding.instance.resamplingEnabled = true;
 
-  // 异常处理
+  /// 查看哪些部件重绘了
+  // debugRepaintRainbowEnabled = true;
+
+  /// 异常处理
   registerErrorHandlers();
 
   runApp(

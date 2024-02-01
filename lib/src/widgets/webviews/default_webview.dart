@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
-import 'package:suiniji/src/constants/constant.dart';
+import 'package:suiniji/src/commons/constant.dart';
 
 class DefaultWebview extends StatelessWidget {
   final String title;
@@ -28,7 +28,13 @@ class DefaultWebview extends StatelessWidget {
         ),
       ),
       body: InAppWebView(
-        initialUrlRequest: URLRequest(url: WebUri.uri(Uri.parse(link))),
+        initialUrlRequest: URLRequest(
+          url: WebUri.uri(Uri.parse(link)),
+        ),
+        initialSettings: InAppWebViewSettings(
+          applicationNameForUserAgent: Constant.appName.toUpperCase(),
+          disallowOverScroll: true,
+        ),
       ),
     );
   }

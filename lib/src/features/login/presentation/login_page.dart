@@ -1,16 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:suiniji/src/commons/constant.dart';
-import 'package:suiniji/src/widgets/link_text/link_text.dart';
+
+// Project imports:
+import 'package:suiniji/src/commons/constants/constants.dart';
+import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   static const double _containerWidth = 280;
   static const double _containerHeight = 48;
-
-  static const String _agreementText =
-      "新用户将自动注册账号，并同意相关[《随你记用户协议》](suiniji://webview?title=Flutter&link=https://flutter.dev/)和[《随你记隐私政策》](https://github.com/)";
 
   /// 电话输入框
   Widget _buildPhoneInput(BuildContext context) {
@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
       height: _containerHeight,
       width: _containerWidth,
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark ? Colors.grey[850] : Colors.grey[100],
+        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff44475a) : Colors.grey[200],
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
@@ -49,22 +49,24 @@ class LoginPage extends StatelessWidget {
 
   /// 验证码登录
   Widget _buildCaptchaButton(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
+    return FilledButton(
+      onPressed: () {
+        HapticFeedback.lightImpact();
+      },
       style: TextButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: Theme.of(context).primaryColor,
-        textStyle: TextStyle(
-          fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
-        ),
         elevation: 0,
         fixedSize: const Size(_containerWidth, _containerHeight),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        enableFeedback: true,
       ),
-      child: const Text(
+      child: Text(
         "验证码登录",
+        style: TextStyle(
+          fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -72,7 +74,9 @@ class LoginPage extends StatelessWidget {
   /// 账号密码登录
   Widget _buildPasswordButton(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        HapticFeedback.lightImpact();
+      },
       style: ButtonStyle(
         fixedSize: MaterialStateProperty.all(
           const Size.fromHeight(20),
@@ -106,8 +110,8 @@ class LoginPage extends StatelessWidget {
             width: 8,
           ),
           Expanded(
-            child: LinkText(
-              text: _agreementText,
+            child: CommonLinkText(
+              text: Constants.agreement,
               textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
                     height: 1.7,
                     fontWeight: FontWeight.w600,
@@ -121,16 +125,27 @@ class LoginPage extends StatelessWidget {
 
   /// 底部
   Widget _buildFooter(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
-      child: Text(
-        Constant.appName,
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              letterSpacing: 2,
-              fontWeight: FontWeight.w700,
+    return Builder(
+      builder: (context) {
+        return InkWell(
+          onTap: () {
+            /// 跳转到rift
+          },
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+            child: Text(
+              Constants.appName,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -161,6 +176,9 @@ class CustomTextInputFormatter extends TextInputFormatter {
     String newText = newValue.text.replaceAll(' ', '');
     if (newText.length >= 11) {
       newText = newText.substring(0, 11);
+      HapticFeedback.vibrate();
+    }
+    if (oldValue.text.length <= 1 && newText.isEmpty) {
       HapticFeedback.vibrate();
     }
     StringBuffer buffer = StringBuffer();

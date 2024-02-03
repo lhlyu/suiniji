@@ -58,6 +58,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   permission_handler: ^11.2.0
+  fpdart: ^1.1.0
+  pretty_qr_code: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +77,7 @@ dev_dependencies:
   riverpod_generator: ^2.3.9
   custom_lint: ^0.5.8
   riverpod_lint: ^2.3.7
+  import_sorter: ^4.6.0
 
 
 flutter:

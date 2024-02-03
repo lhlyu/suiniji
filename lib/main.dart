@@ -1,8 +1,13 @@
-import 'package:device_preview/device_preview.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:device_preview/device_preview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:suiniji/src/app.dart';
 import 'package:suiniji/src/app_startup.dart';
 
@@ -22,7 +27,7 @@ void main() async {
   runApp(
     ProviderScope(
       child: DevicePreview(
-        enabled: kIsWeb && false,
+        enabled: kIsWeb && true,
         builder: (context) => AppStartupWidget(
           onLoaded: (context) => const App(),
         ),

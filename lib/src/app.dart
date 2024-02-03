@@ -1,8 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:suiniji/src/routes/app_router.dart';
-import 'package:suiniji/src/theme/app_theme.dart';
+
+// Project imports:
+import 'package:suiniji/src/commons/routes/app_router.dart';
+import 'package:suiniji/src/commons/theme/app_theme.dart';
+import 'package:suiniji/src/commons/widgets/status_bar/status_bar.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
@@ -10,7 +16,6 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
-
     return MaterialApp.router(
       routerConfig: appRouter,
       theme: AppTheme.lightTheme,
@@ -24,6 +29,7 @@ class App extends ConsumerWidget {
         Locale('zh', 'CN'),
         Locale('en', 'US'),
       ],
+      builder: (context, child) => CommonStatusBar(child: child!),
     );
   }
 }

@@ -1,12 +1,15 @@
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:suiniji/src/utils/open_url.dart';
+
+// Project imports:
+import 'package:suiniji/src/commons/utils/open_url.dart';
 
 /// 匹配链接的规则
 final _pattern = RegExp(r'\[([^\]]+)\]\(([a-z-A-Z]+[^\)]+)\)', caseSensitive: false);
 
 /// 带有链接的文本
-class LinkText extends StatelessWidget {
+class CommonLinkText extends StatelessWidget {
   /// 文本内容
   final String text;
 
@@ -16,7 +19,7 @@ class LinkText extends StatelessWidget {
   /// 链接的文本样式
   final TextStyle? linkStyle;
 
-  const LinkText({
+  const CommonLinkText({
     super.key,
     required this.text,
     this.textStyle,
@@ -33,7 +36,7 @@ class LinkText extends StatelessWidget {
           text,
           linkStyle ??
               TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
         ),

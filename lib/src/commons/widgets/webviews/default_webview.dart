@@ -1,16 +1,21 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
-import 'package:suiniji/src/commons/constant.dart';
 
-class DefaultWebview extends StatelessWidget {
+// Project imports:
+import 'package:suiniji/src/commons/constants/constants.dart';
+
+class CommonDefaultWebview extends StatelessWidget {
   final String title;
 
   final String link;
 
-  const DefaultWebview({
+  const CommonDefaultWebview({
     super.key,
-    this.title = Constant.appName,
+    this.title = Constants.appName,
     this.link = '',
   });
 
@@ -32,7 +37,7 @@ class DefaultWebview extends StatelessWidget {
           url: WebUri.uri(Uri.parse(link)),
         ),
         initialSettings: InAppWebViewSettings(
-          applicationNameForUserAgent: Constant.appName.toUpperCase(),
+          applicationNameForUserAgent: Constants.appName.toUpperCase(),
           disallowOverScroll: true,
         ),
       ),

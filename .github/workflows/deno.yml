@@ -1,0 +1,24 @@
+name: Deno 部署
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write 
+      contents: read
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 部署Deno
+        uses: denoland/deployctl@v1
+        with:
+          project: busy-lobster-82
+          entrypoint: mock/main.ts

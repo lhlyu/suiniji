@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget {
 
   static const double _containerWidth = 280;
   static const double _containerHeight = 48;
+  static final BorderRadius _radius = BorderRadius.circular(8);
 
   /// 电话输入框
   Widget _buildPhoneInput(BuildContext context) {
@@ -22,7 +23,7 @@ class LoginPage extends StatelessWidget {
       width: _containerWidth,
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff44475a) : Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: _radius,
       ),
       child: TextField(
         controller: controller,
@@ -57,7 +58,7 @@ class LoginPage extends StatelessWidget {
         elevation: 0,
         fixedSize: const Size(_containerWidth, _containerHeight),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: _radius,
         ),
         enableFeedback: true,
       ),
@@ -134,7 +135,7 @@ class LoginPage extends StatelessWidget {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+            padding: const EdgeInsets.all(24),
             child: Text(
               Constants.appName,
               textAlign: TextAlign.center,
@@ -170,6 +171,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
+/// 自定义输入
 class CustomTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {

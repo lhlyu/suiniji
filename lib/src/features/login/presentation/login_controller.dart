@@ -28,7 +28,7 @@ class LoginState {
 @riverpod
 class LoginController extends _$LoginController {
   @override
-  FutureOr<LoginState> build() {
+  LoginState build() {
     return const LoginState();
   }
 

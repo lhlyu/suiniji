@@ -28,6 +28,7 @@
 - [riverpod项目](https://github.com/AhmedLSayed9/deliverzler)
 - [fpdart](https://github.com/SandroMaglione/fpdart)
 - [文本选择工具栏](https://github.com/flutter/flutter/issues/125391)
+- [存储](https://isar.dev/zh/tutorials/quickstart.html)
 
 ### 国家条例
 

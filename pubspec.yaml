@@ -16,8 +16,6 @@ dependencies:
   go_router: ^13.0.1
 
   # 存储
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
 
   # 状态管理
 
@@ -60,6 +58,7 @@ dependencies:
   permission_handler: ^11.2.0
   fpdart: ^1.1.0
   pretty_qr_code: ^3.1.0
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

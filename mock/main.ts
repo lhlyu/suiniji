@@ -1,3 +1,4 @@
+import { handlerConfigInfo } from "./config/service.ts";
 import {
   handlerCaptcha,
   handlerLoginAndRegister,
@@ -8,6 +9,9 @@ import Result from "./utils/result.ts";
 type handlerFn = (req: Request) => Promise<Response>;
 
 const routes: Record<string, handlerFn> = {
+  // config
+  "GET:/api/config/info": handlerConfigInfo,
+  // user
   "GET:/api/user/mobile": handlerUserMobile,
   "POST:/api/user/auth": handlerLoginAndRegister,
   "POST:/api/user/captcha": handlerCaptcha,

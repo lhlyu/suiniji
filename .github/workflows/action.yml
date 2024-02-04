@@ -3,7 +3,7 @@ name: Flutter 自动化打包
 on:
   push:
     branches:
-      - dev
+      - master
 
 # 并发策略
 concurrency:

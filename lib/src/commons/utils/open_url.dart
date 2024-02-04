@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/routes/app_router.dart';
+import 'package:suiniji/src/routes/app_router.dart';
 
 /// 打开任意的链接
 /// doc: https://pub.dev/packages/url_launcher

@@ -3,12 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/routes/route.dart';
-import 'package:suiniji/src/commons/widgets/webviews/default_webview.dart';
-import 'package:suiniji/src/features/home/presentation/home_page.dart';
-import 'package:suiniji/src/features/login/presentation/login_page.dart';
-import 'package:suiniji/src/features/rift/presentation/rift_page.dart';
-import 'package:suiniji/src/features/setting/presentation/setting_page.dart';
+import 'package:suiniji/src/pages/home/home_page.dart';
+import 'package:suiniji/src/pages/login/login_page.dart';
+import 'package:suiniji/src/pages/rift/rift_page.dart';
+import 'package:suiniji/src/pages/setting/setting_page.dart';
+import 'package:suiniji/src/pages/webview/webview_page.dart';
+import 'package:suiniji/src/routes/route.dart';
 
 part 'app_router.g.dart';
 
@@ -21,7 +21,7 @@ class Routes {
   final webview = Route('webview', (context, state) {
     final title = state.uri.queryParameters['title'] ?? '';
     final link = state.uri.queryParameters['link'] ?? '';
-    return CommonDefaultWebview(
+    return WebviewPage(
       title: title,
       link: link,
     );

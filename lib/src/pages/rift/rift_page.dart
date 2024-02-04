@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+class RiftPage extends StatelessWidget {
+  const RiftPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text("设置页");
+    return const Text("裂缝");
   }
 }

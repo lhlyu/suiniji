@@ -54,7 +54,10 @@ export async function handlerLoginAndRegister(req: Request): Promise<Response> {
 
     await kv.set(["user", user.mobile], user);
 
-    return Result.success(user.token).toResponse();
+    return Result.success({
+      uid: body.mobile,
+      token: user.token,
+    }).toResponse();
   }
 
   const u = r.value as UserModel;
@@ -73,13 +76,19 @@ export async function handlerLoginAndRegister(req: Request): Promise<Response> {
       }
       await kv.set(["user", user.mobile], user);
 
-      return Result.success(user.token).toResponse();
+      return Result.success({
+        uid: body.mobile,
+        token: user.token,
+      }).toResponse();
     case 2:
       if (body.password != u.password) {
         return Result.failed(7, "密码错误").toResponse();
       }
       await kv.set(["user", user.mobile], user);
-      return Result.success(user.token).toResponse();
+      return Result.success({
+        uid: body.mobile,
+        token: user.token,
+      }).toResponse();
   }
   return Result.failed(8, "未知登录").toResponse();
 }

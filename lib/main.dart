@@ -27,7 +27,7 @@ void main() async {
   runApp(
     ProviderScope(
       child: DevicePreview(
-        enabled: kIsWeb && true,
+        enabled: kIsWeb && kDebugMode,
         builder: (context) => AppStartupWidget(
           onLoaded: (context) => const App(),
         ),

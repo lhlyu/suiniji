@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 // Project imports:
 import 'package:suiniji/src/app_error.dart';
 import 'package:suiniji/src/app_loading.dart';
+import 'package:suiniji/src/injection_container.dart';
 
 part 'app_startup.g.dart';
 
@@ -19,7 +20,9 @@ Future<void> appStartup(AppStartupRef ref) async {
   // var delay = Future.delayed(const Duration(seconds: 2));
 
   /// 这里写需要初始化的任务
-  await Future.wait([]);
+  await Future.wait([
+    setup(),
+  ]);
 }
 
 /// app启动后根据不同的情况去展示ui

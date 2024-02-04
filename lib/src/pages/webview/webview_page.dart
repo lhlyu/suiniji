@@ -8,12 +8,12 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import 'package:suiniji/src/commons/constants/constants.dart';
 
-class CommonDefaultWebview extends StatelessWidget {
+class WebviewPage extends StatelessWidget {
   final String title;
 
   final String link;
 
-  const CommonDefaultWebview({
+  const WebviewPage({
     super.key,
     this.title = Constants.appName,
     this.link = '',

@@ -9,6 +9,10 @@
 
 `dart run import_sorter:main`
 
+- 创建特征目录
+
+`dart run clean_architecture_scaffold:main -f FEATURE_NAME`
+
 ## 思考
 
 - 提供“相对时间”和“绝对时间”展示的设置
@@ -29,6 +33,7 @@
 - [fpdart](https://github.com/SandroMaglione/fpdart)
 - [文本选择工具栏](https://github.com/flutter/flutter/issues/125391)
 - [存储](https://isar.dev/zh/tutorials/quickstart.html)
+- [Riverpod Clean](https://otakoyi.software/blog/flutter-clean-architecture-with-riverpod-and-supabase)
 
 ### 国家条例
 

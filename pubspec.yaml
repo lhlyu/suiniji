@@ -15,15 +15,10 @@ dependencies:
   # 路由
   go_router: ^13.0.1
 
-  # 存储
-
-  # 状态管理
-
   # app升级库
   upgrader: ^9.0.0
 
   # 数据类 / 联合体 / 模式匹配 / 克隆的代码生成器
-  freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
 
   # 网络
@@ -56,9 +51,38 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   permission_handler: ^11.2.0
+
+  # 函数式编程
   fpdart: ^1.1.0
+
+  # 二维码
   pretty_qr_code: ^3.1.0
+
+  # 网络检查
   internet_connection_checker: ^1.0.0+1
+
+  # 空的小部件
+  nil: ^1.1.1
+
+  # 命令行解析
+  args: ^2.4.2
+
+  # 依赖注入
+  get_it: ^7.6.7
+
+  # class序列化
+  json_serializable: ^6.7.1
+
+  # 加密解密
+  crypto: ^3.0.3
+
+  # 转换
+  convert: ^3.1.1
+
+  # 存储
+  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -68,14 +92,13 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   # 代码生成工具
   build_runner: ^2.4.7
-  # freezed 工具
-  freezed: ^2.4.6
-  json_serializable: ^6.7.1
 
   # riverpod工具
   riverpod_generator: ^2.3.9
   custom_lint: ^0.5.8
   riverpod_lint: ^2.3.7
+
+  # import排序
   import_sorter: ^4.6.0
 
 

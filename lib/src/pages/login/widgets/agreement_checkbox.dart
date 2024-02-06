@@ -10,14 +10,16 @@ import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
 
 /// 协议同意框
 class AgreementCheckbox extends ConsumerWidget {
-  final double? w;
+  final double width;
+  final bool agreement;
+  final void Function(bool? value)? onChanged;
 
-  const AgreementCheckbox(this.w, {super.key});
+  const AgreementCheckbox({super.key, this.width = 280, this.agreement = false, this.onChanged});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      width: w,
+      width: width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,8 +29,8 @@ class AgreementCheckbox extends ConsumerWidget {
               horizontal: VisualDensity.minimumDensity,
               vertical: VisualDensity.minimumDensity,
             ),
-            value: false,
-            onChanged: (value) {},
+            value: agreement,
+            onChanged: onChanged,
           ),
           const SizedBox(
             width: 8,
@@ -37,8 +39,13 @@ class AgreementCheckbox extends ConsumerWidget {
             child: CommonLinkText(
               text: Constants.agreement,
               textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    height: 1.7,
                     fontWeight: FontWeight.w600,
+                    height: 1.6,
+                  ),
+              linkStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.w600,
+                    height: 1.6,
                   ),
             ),
           )

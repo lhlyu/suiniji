@@ -34,6 +34,8 @@
 - [文本选择工具栏](https://github.com/flutter/flutter/issues/125391)
 - [存储](https://isar.dev/zh/tutorials/quickstart.html)
 - [Riverpod Clean](https://otakoyi.software/blog/flutter-clean-architecture-with-riverpod-and-supabase)
+- [组件借鉴的地方](https://github.com/luo3house/flutter_vant/tree/main/vantui/lib/src/widgets)
+- [主题借鉴的地方](https://github.com/tusen-ai/naive-ui/blob/main/src/_styles/common/dark.ts)
 
 ### 国家条例
 

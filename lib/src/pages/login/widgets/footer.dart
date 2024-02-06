@@ -18,6 +18,7 @@ class Footer extends ConsumerWidget {
       },
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Text(
@@ -25,7 +26,7 @@ class Footer extends ConsumerWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 letterSpacing: 2,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.bold,
               ),
         ),
       ),

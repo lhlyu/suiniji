@@ -1,4 +1,5 @@
 import { handlerConfigInfo } from "./config/service.ts";
+import { handlerLogout } from "./user/server.ts";
 import {
   handlerCaptcha,
   handlerLoginAndRegister,
@@ -14,6 +15,7 @@ const routes: Record<string, handlerFn> = {
   // user
   "GET:/api/user/mobile": handlerUserMobile,
   "POST:/api/user/auth": handlerLoginAndRegister,
+  "POST:/api/user/logout": handlerLogout,
   "POST:/api/user/captcha": handlerCaptcha,
 };
 

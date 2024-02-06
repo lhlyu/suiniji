@@ -2,31 +2,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 /// 电话输入框
-class PhoneInput extends ConsumerWidget {
-  final double? w;
-  final double? h;
-  final double r;
+class PhoneInput extends StatelessWidget {
+  final double width;
+  final double height;
+  final double radius;
+  final void Function(String)? onChange;
 
-  const PhoneInput(this.w, this.h, this.r, {super.key});
+  const PhoneInput({
+    super.key,
+    this.width = 280,
+    this.height = 48,
+    this.radius = 8,
+    this.onChange,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController controller = TextEditingController();
-
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      height: h,
-      width: w,
+      height: height,
+      width: width,
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff44475a) : Colors.grey[200],
-        borderRadius: BorderRadius.circular(r),
+        // color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff44475a) : Colors.grey[200],
+        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(radius),
       ),
       child: TextField(
-        controller: controller,
         style: Theme.of(context).textTheme.bodyMedium,
         keyboardType: TextInputType.phone,
         maxLength: 13,
@@ -44,6 +46,7 @@ class PhoneInput extends ConsumerWidget {
           CustomTextInputFormatter(),
         ],
         maxLengthEnforcement: MaxLengthEnforcement.none,
+        onChanged: onChange,
       ),
     );
   }

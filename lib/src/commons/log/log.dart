@@ -9,7 +9,10 @@ import 'package:logger/logger.dart';
 var logger = Logger(
   // 设置不同的日志级别
   filter: _LogFilter(),
-  printer: PrettyPrinter(),
+  printer: PrettyPrinter(
+    colors: true,
+    printTime: true,
+  ),
 );
 
 class _LogFilter extends LogFilter {

@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/log/log.dart';
-import 'package:suiniji/src/services/http.dart';
 
 final sl = GetIt.instance;
 
@@ -15,9 +14,6 @@ Future<void> setup() async {
 
   /// 网络检测
   sl.registerLazySingleton(() => InternetConnectionChecker());
-
-  /// 请求
-  sl.registerLazySingleton<HttpService>(() => HttpService());
 
   /// 存储
   sl.registerSingletonAsync<SharedPreferences>(() => SharedPreferences.getInstance());

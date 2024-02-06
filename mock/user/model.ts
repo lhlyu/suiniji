@@ -8,5 +8,6 @@ export interface UserLoginAndRegisterModel {
   mobile: string;
   kind: number;
   code: number;
+  signal: number;
   password: string;
 }

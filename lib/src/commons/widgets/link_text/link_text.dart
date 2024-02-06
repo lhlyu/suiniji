@@ -28,17 +28,19 @@ class CommonLinkText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final defaultTextStyle = Theme.of(context).textTheme.bodyMedium;
+
+    final defaultLinkStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: Theme.of(context).colorScheme.primary,
+        );
+
     return RichText(
       text: TextSpan(
-        style: textStyle,
+        style: textStyle ?? defaultTextStyle,
         children: _getSpans(
           context,
           text,
-          linkStyle ??
-              TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
+          linkStyle ?? defaultLinkStyle,
         ),
       ),
     );

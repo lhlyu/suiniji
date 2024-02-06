@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
-import 'package:fpdart/fpdart.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/constants.dart';
@@ -86,7 +85,7 @@ class HttpService {
     ));
   }
 
-  // 获取签名
+  /// 获取签名
   String _getSign(String headerStr, RequestOptions options) {
     final params = options.queryParameters;
     final data = options.data;
@@ -106,25 +105,27 @@ class HttpService {
     return hex.encode(digest.bytes);
   }
 
-  Future<Either<String, Result>> get(String uri, {Map<String, dynamic>? params, Options? options}) async {
+  Future<Result> get(String uri, {Map<String, dynamic>? params, Options? options}) async {
     try {
       final response = await _dio.get(uri, queryParameters: params);
       final r = Result.fromJson(response.data);
-      return Right(r);
+      return r;
     } on DioException catch (e) {
       logger.e('GET:$uri, $params, $e');
-      return const Left("请求异常");
+      return const Result(code: -1, msg: "请求异常");
     }
   }
 
-  Future<Either<String, Result>> post(String uri, {Map<String, dynamic>? data, Options? options}) async {
+  Future<Result> post(String uri, {Map<String, dynamic>? data, Options? options}) async {
     try {
       final response = await _dio.post(uri, data: data);
       final r = Result.fromJson(response.data);
-      return Right(r);
+      return r;
     } on DioException catch (e) {
       logger.e('POST:$uri, $data, $e');
-      return const Left("请求异常");
+      return const Result(code: -2, msg: "请求异常");
     }
   }
 }
+
+final httpService = HttpService();

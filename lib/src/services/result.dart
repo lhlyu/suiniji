@@ -17,13 +17,17 @@ class Result {
   const Result({
     required this.code,
     required this.msg,
-    required this.data,
+    this.data,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
 
   bool ok() {
     return code == 0;
+  }
+
+  bool failed() {
+    return code != 0;
   }
 
   String tip() {

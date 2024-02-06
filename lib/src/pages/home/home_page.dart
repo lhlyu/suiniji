@@ -6,6 +6,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("首页");
+    return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
+      appBar: AppBar(
+        title: const Text("首页"),
+      ),
+    );
   }
 }

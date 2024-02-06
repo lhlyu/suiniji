@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/log/log.dart';
 import 'package:suiniji/src/pages/home/home_page.dart';
 import 'package:suiniji/src/pages/login/login_page.dart';
 import 'package:suiniji/src/pages/rift/rift_page.dart';
@@ -21,6 +22,7 @@ class Routes {
   final webview = Route('webview', (context, state) {
     final title = state.uri.queryParameters['title'] ?? '';
     final link = state.uri.queryParameters['link'] ?? '';
+    logger.i('$title, $link');
     return WebviewPage(
       title: title,
       link: link,
@@ -43,12 +45,14 @@ class Routes {
 
 final routes = Routes();
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 GoRouter appRouter(AppRouterRef ref) {
   return GoRouter(
     initialLocation: routes.root,
     errorBuilder: routes.home.builder,
     redirect: (context, state) {
+      logger.d("路由 -> ${state.uri}");
+
       return null;
     },
     routes: routes.routes,

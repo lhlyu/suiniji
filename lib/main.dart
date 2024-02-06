@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:device_preview/device_preview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:oktoast/oktoast.dart';
 
 // Project imports:
 import 'package:suiniji/src/app.dart';
@@ -28,8 +29,10 @@ void main() async {
     ProviderScope(
       child: DevicePreview(
         enabled: kIsWeb && kDebugMode,
-        builder: (context) => AppStartupWidget(
-          onLoaded: (context) => const App(),
+        builder: (context) => OKToast(
+          child: AppStartupWidget(
+            onLoaded: (context) => const App(),
+          ),
         ),
       ),
     ),

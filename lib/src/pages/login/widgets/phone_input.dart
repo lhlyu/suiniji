@@ -3,42 +3,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// 电话输入框
-class PhoneInput extends StatelessWidget {
+class PhoneInput extends StatefulWidget {
   final double width;
   final double height;
   final double radius;
-  final void Function(String)? onChange;
+  final void Function(String)? onChanged;
 
   const PhoneInput({
     super.key,
     this.width = 280,
     this.height = 48,
     this.radius = 8,
-    this.onChange,
+    this.onChanged,
   });
+
+  @override
+  State<PhoneInput> createState() => _PhoneInputState();
+}
+
+class _PhoneInputState extends State<PhoneInput> {
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      height: height,
-      width: width,
+      height: widget.height,
+      width: widget.width,
       decoration: BoxDecoration(
-        // color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff44475a) : Colors.grey[200],
-        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(radius),
+        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.07),
+        borderRadius: BorderRadius.circular(widget.radius),
       ),
       child: TextField(
-        style: Theme.of(context).textTheme.bodyMedium,
+        controller: _controller,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
         keyboardType: TextInputType.phone,
         maxLength: 13,
         textAlign: TextAlign.center,
         cursorColor: Theme.of(context).textTheme.bodyLarge?.color,
-        decoration: const InputDecoration(
-          hintText: '手机号码',
-          contentPadding: EdgeInsets.zero,
+        decoration: InputDecoration(
+          hintText: '请输入手机号',
           counterText: "",
           border: InputBorder.none,
+          suffixIcon: _controller.text.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.clear,
+                    size: 16,
+                  ),
+                  onPressed: () {
+                    _controller.clear();
+                    widget.onChanged!("");
+                    HapticFeedback.vibrate();
+                  },
+                )
+              : null,
+          // 当存在清除按钮时，使用透明Icon作为前缀以保持文本居中
+          prefixIcon: _controller.text.isNotEmpty
+              ? const Opacity(
+                  opacity: 0,
+                  child: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: null,
+                  ),
+                )
+              : null,
         ),
         scrollPadding: EdgeInsets.zero,
         inputFormatters: [
@@ -46,7 +77,7 @@ class PhoneInput extends StatelessWidget {
           CustomTextInputFormatter(),
         ],
         maxLengthEnforcement: MaxLengthEnforcement.none,
-        onChanged: onChange,
+        onChanged: widget.onChanged,
       ),
     );
   }
@@ -59,7 +90,7 @@ class CustomTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     String newText = newValue.text.replaceAll(' ', '');
-    if (newText.length >= _phoneLength) {
+    if (newText.length > _phoneLength) {
       newText = newText.substring(0, _phoneLength);
       HapticFeedback.vibrate();
     }

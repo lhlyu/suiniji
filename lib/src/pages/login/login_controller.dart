@@ -8,20 +8,26 @@ class LoginState {
   /// 手机号码
   final String mobile;
 
+  /// 验证码
+  final String captcha;
+
   /// 是否同意协议
   final bool agreement;
 
   const LoginState({
     this.mobile = "",
+    this.captcha = "",
     this.agreement = false,
   });
 
   LoginState copyWith({
     String? mobile,
+    String? captcha,
     bool? agreement,
   }) {
     return LoginState(
       mobile: mobile ?? this.mobile,
+      captcha: captcha ?? this.captcha,
       agreement: agreement ?? this.agreement,
     );
   }
@@ -38,11 +44,15 @@ class LoginController extends _$LoginController {
     state = state.copyWith(mobile: mobile);
   }
 
+  void updateCaptcha(String captcha) {
+    state = state.copyWith(captcha: captcha);
+  }
+
   void changeAgreement(bool agreement) {
     state = state.copyWith(agreement: agreement);
   }
 
-  bool disabled() {
-    return state.mobile.length < 13;
+  String getRealPhone() {
+    return state.mobile.replaceAll(' ', '');
   }
 }

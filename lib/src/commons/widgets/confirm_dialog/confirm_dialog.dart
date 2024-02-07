@@ -79,7 +79,13 @@ class _DialogContent extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalDivider(),
+              const SizedBox(
+                width: 1,
+                height: 48,
+                child: VerticalDivider(
+                  thickness: 1,
+                ),
+              ),
               Expanded(
                 child: TextButton(
                   onPressed: () {

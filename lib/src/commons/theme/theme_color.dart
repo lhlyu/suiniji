@@ -153,8 +153,19 @@ class ThemeColor {
   });
 
   ThemeData get theme {
+    const pageTransitionsTheme = PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.linux: _NoAnimationPageTransitionsBuilder(),
+        TargetPlatform.macOS: _NoAnimationPageTransitionsBuilder(),
+        TargetPlatform.windows: _NoAnimationPageTransitionsBuilder(),
+      },
+    );
+
     return ThemeData(
       brightness: brightness,
+      pageTransitionsTheme: pageTransitionsTheme,
       colorScheme: ColorScheme(
         brightness: brightness,
         background: baseColor,
@@ -225,5 +236,20 @@ class ThemeColor {
         thickness: 1,
       ),
     );
+  }
+}
+
+class _NoAnimationPageTransitionsBuilder extends PageTransitionsBuilder {
+  const _NoAnimationPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return child;
   }
 }

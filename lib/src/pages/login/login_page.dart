@@ -1,20 +1,19 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:suiniji/src/commons/utils/toast.dart';
+import 'package:suiniji/src/commons/utils/verify.dart';
+import 'package:suiniji/src/commons/widgets/picture_click_captcha/picture_click_captcha.dart';
 
 // Project imports:
 import 'package:suiniji/src/pages/login/login_controller.dart';
 import 'package:suiniji/src/pages/login/widgets/agreement_checkbox.dart';
-import 'package:suiniji/src/pages/login/widgets/captcha_button.dart';
+import 'package:suiniji/src/pages/login/widgets/captcha_input.dart';
 import 'package:suiniji/src/pages/login/widgets/footer.dart';
-import 'package:suiniji/src/pages/login/widgets/password_button.dart';
 import 'package:suiniji/src/pages/login/widgets/phone_input.dart';
 import 'package:suiniji/src/pages/login/widgets/show_agreement_dialog.dart';
-import 'package:suiniji/src/routes/app_router.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -24,25 +23,6 @@ class LoginPage extends ConsumerWidget {
     final action = ref.read(loginControllerProvider.notifier);
     final state = ref.watch(loginControllerProvider);
 
-    final disabled = action.disabled();
-
-    final onClick = disabled
-        ? null
-        : () async {
-            HapticFeedback.lightImpact();
-            if (!state.agreement) {
-              // 没有同意协议，需要弹出提示框
-              final ok = await showAgreementDialog(context);
-              if (ok == null || ok == false) {
-                return;
-              }
-              action.changeAgreement(true);
-            }
-            // 同意，检查手机号码
-            if (!context.mounted) return;
-            context.goNamed(routes.home.name);
-          };
-
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       body: Center(
@@ -50,26 +30,49 @@ class LoginPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             PhoneInput(
-              onChange: (val) {
-                action.updateMobile(val);
+              onChanged: action.updateMobile,
+            ),
+            const SizedBox(height: 16),
+            CaptchaInput(
+              canSendCaptcha: state.mobile.length >= 13,
+              onChanged: (value) {
+                action.updateCaptcha(value);
+                if (value.length < 6 || state.mobile.isEmpty) {
+                  return;
+                }
+                // 校验短信验证码
+                Toast.success('手机号: ${state.mobile}\n验证码: $value');
+              },
+              onSendCaptcha: () async {
+                // 校验一下手机号码是否正确
+                if (!isValidPhoneNumber(action.getRealPhone())) {
+                  Toast.error('请输入正确的手机号');
+                  return false;
+                }
+                if (!state.agreement) {
+                  // 没有同意协议，需要弹出提示框
+                  final ok = await showAgreementDialog(context);
+                  if (ok == null || ok == false) {
+                    return false;
+                  }
+                  action.changeAgreement(true);
+                }
+
+                final ok = await commonPictureClickCaptcha(context);
+                if (ok == null || ok == false) {
+                  return false;
+                }
+
+                action.updateCaptcha("");
+                // 发送验证码
+
+                return true;
               },
             ),
             const SizedBox(height: 16),
-            CaptchaButton(
-              disabled: disabled,
-              onClick: onClick,
-            ),
-            const SizedBox(height: 12),
-            PasswordButton(
-              disabled: disabled,
-              onClick: onClick,
-            ),
-            const SizedBox(height: 4),
             AgreementCheckbox(
               agreement: state.agreement,
-              onChanged: (value) {
-                action.changeAgreement(value!);
-              },
+              onChanged: action.changeAgreement,
             ),
             const SizedBox(height: 36),
           ],

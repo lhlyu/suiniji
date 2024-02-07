@@ -12,7 +12,7 @@ import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
 class AgreementCheckbox extends ConsumerWidget {
   final double width;
   final bool agreement;
-  final void Function(bool? value)? onChanged;
+  final void Function(bool value)? onChanged;
 
   const AgreementCheckbox({super.key, this.width = 280, this.agreement = false, this.onChanged});
 
@@ -25,12 +25,22 @@ class AgreementCheckbox extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Checkbox(
+            side: MaterialStateBorderSide.resolveWith(
+              (Set<MaterialState> states) {
+                return BorderSide(
+                  width: 1,
+                  color: Theme.of(context).colorScheme.primary,
+                );
+              },
+            ),
             visualDensity: const VisualDensity(
               horizontal: VisualDensity.minimumDensity,
               vertical: VisualDensity.minimumDensity,
             ),
             value: agreement,
-            onChanged: onChanged,
+            onChanged: (value) {
+              onChanged!(value!);
+            },
           ),
           const SizedBox(
             width: 8,

@@ -18,7 +18,7 @@ const lightThemeColor = ThemeColor(
   infoColorSuppl: Color(0xFF4098FC),
   successColor: Color(0xFF18A058),
   successColorHover: Color(0xFF36AD6A),
-  successColorPressed: Color(0xFF0C7A43),
+  successColorPressed: Color.fromARGB(255, 6, 11, 9),
   successColorSuppl: Color(0xFF36AD6A),
   warningColor: Color(0xFFF0A020),
   warningColorHover: Color(0xFFFCB040),

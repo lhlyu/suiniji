@@ -10,7 +10,7 @@ class Toast {
       message,
       duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xff919399),
+      backgroundColor: const Color(0xFF2080F0),
       radius: 4,
     );
   }
@@ -20,7 +20,7 @@ class Toast {
       message,
       duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xff7ebf50),
+      backgroundColor: const Color(0xFF18A058),
       radius: 4,
     );
   }
@@ -30,7 +30,7 @@ class Toast {
       message,
       duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xffdda451),
+      backgroundColor: const Color(0xFFF0A020),
       radius: 4,
     );
   }
@@ -38,9 +38,9 @@ class Toast {
   static void error(String message) {
     showToast(
       message,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xffe57471),
+      backgroundColor: const Color(0xFFD03050),
       radius: 4,
     );
   }

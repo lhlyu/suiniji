@@ -30,6 +30,12 @@ void main() async {
       child: DevicePreview(
         enabled: kIsWeb && kDebugMode,
         builder: (context) => OKToast(
+          textPadding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            top: 8,
+            bottom: 8,
+          ),
           child: AppStartupWidget(
             onLoaded: (context) => const App(),
           ),

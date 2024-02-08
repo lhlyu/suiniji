@@ -3,7 +3,10 @@
 ## 开发
 
 1. `flutter pub get`
-2. `dart run build_runner build`
+
+- 自动创建
+  
+`dart run build_runner build`
 
 - import整理
 

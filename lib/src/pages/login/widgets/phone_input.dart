@@ -31,18 +31,15 @@ class _PhoneInputState extends State<PhoneInput> {
       height: widget.height,
       width: widget.width,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.07),
+        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.03),
         borderRadius: BorderRadius.circular(widget.radius),
       ),
       child: TextField(
         controller: _controller,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+        style: Theme.of(context).textTheme.bodyLarge,
         keyboardType: TextInputType.phone,
         maxLength: 13,
         textAlign: TextAlign.center,
-        cursorColor: Theme.of(context).textTheme.bodyLarge?.color,
         decoration: InputDecoration(
           hintText: '请输入手机号',
           counterText: "",

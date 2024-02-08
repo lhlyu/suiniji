@@ -1,4 +1,6 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:suiniji/gen/assets.gen.dart';
 
 Future<bool?> commonPictureClickCaptcha(BuildContext context) {
   return showDialog<bool>(
@@ -10,7 +12,6 @@ Future<bool?> commonPictureClickCaptcha(BuildContext context) {
         ),
         elevation: 0,
         child: const _PictureClickCaptcha(
-          'test.webp',
           4,
           [Offset(50, 100), Offset(150, 200), Offset(250, 300), Offset(350, 400)],
           20,
@@ -22,12 +23,11 @@ Future<bool?> commonPictureClickCaptcha(BuildContext context) {
 
 // 图片点击验证码
 class _PictureClickCaptcha extends StatefulWidget {
-  final String imagePath; // 图片路径
   final int maxMarks; // 最大标记数
   final List<Offset> targetPoints; // 目标坐标点
   final double tolerance; // 容忍误差范围
 
-  const _PictureClickCaptcha(this.imagePath, this.maxMarks, this.targetPoints, this.tolerance);
+  const _PictureClickCaptcha(this.maxMarks, this.targetPoints, this.tolerance);
 
   @override
   _PictureClickCaptchaState createState() => _PictureClickCaptchaState();
@@ -54,8 +54,7 @@ class _PictureClickCaptchaState extends State<_PictureClickCaptcha> {
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
                   ),
-                  child: Image.asset(
-                    widget.imagePath,
+                  child: Assets.test.image(
                     fit: BoxFit.cover,
                   ),
                 )),
@@ -79,7 +78,7 @@ class _PictureClickCaptchaState extends State<_PictureClickCaptcha> {
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           child: Text(
-            "按顺序点击图片",
+            "随便点击图片四次",
             style: TextStyle(fontSize: 16),
           ),
         ),
@@ -117,7 +116,7 @@ class _PictureClickCaptchaState extends State<_PictureClickCaptcha> {
 
     // 当达到最大标记次数时打印日志
     if (_markedPoints.length == widget.maxMarks) {
-      print("OK");
+      Navigator.of(context).pop(true);
     }
   }
 

@@ -1,6 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,16 +30,34 @@ class CaptchaInput extends StatefulWidget {
 
 class _CaptchaInputState extends State<CaptchaInput> {
   final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
   bool _isSendCaptcha = false;
   Timer? _timer;
   int _start = 0;
+
+  @override
+  void didUpdateWidget(covariant CaptchaInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.canSendCaptcha != oldWidget.canSendCaptcha && oldWidget.canSendCaptcha == true) {
+      setState(() {
+        _isSendCaptcha = false;
+        _controller.clear();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     _timer?.cancel();
 
     setState(() {
-      _start = 5;
+      _start = 10;
     });
     _timer = Timer.periodic(
       oneSec,
@@ -63,16 +82,9 @@ class _CaptchaInputState extends State<CaptchaInput> {
       keyboardType: TextInputType.phone,
       maxLength: 6,
       textAlign: TextAlign.center,
-      cursorColor: Theme.of(context).textTheme.bodyLarge?.color,
+      style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
         hintText: '验证码',
-        hintStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: Theme.of(context)
-                  .textButtonTheme
-                  .style!
-                  .foregroundColor
-                  ?.resolve(<MaterialState>{MaterialState.disabled}),
-            ),
         counterText: "",
         border: InputBorder.none,
         suffixIcon: _controller.text.isNotEmpty
@@ -114,7 +126,7 @@ class _CaptchaInputState extends State<CaptchaInput> {
       height: widget.height,
       width: widget.width,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.07),
+        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.03),
         borderRadius: BorderRadius.circular(widget.radius),
       ),
       child: Row(
@@ -124,29 +136,33 @@ class _CaptchaInputState extends State<CaptchaInput> {
           ),
           SizedBox(
             width: 100,
-            child: TextButton(
-              style: const ButtonStyle(
-                overlayColor: MaterialStatePropertyAll(Colors.transparent),
-              ),
-              onPressed: (_start == 0 && widget.canSendCaptcha)
-                  ? () async {
-                      HapticFeedback.lightImpact();
-                      if (await widget.onSendCaptcha!()) {
-                        startTimer();
-                        _controller.clear();
-                        setState(() {
-                          _isSendCaptcha = true;
-                        });
+            child: Focus(
+              focusNode: _focusNode,
+              child: TextButton(
+                style: const ButtonStyle(
+                  overlayColor: MaterialStatePropertyAll(Colors.transparent),
+                ),
+                onPressed: (_start == 0 && widget.canSendCaptcha)
+                    ? () async {
+                        HapticFeedback.lightImpact();
+                        _focusNode.requestFocus();
+                        if (await widget.onSendCaptcha!()) {
+                          setState(() {
+                            startTimer();
+                            _controller.clear();
+                            _isSendCaptcha = true;
+                          });
+                        }
                       }
-                    }
-                  : null,
-              child: Text(
-                _start > 0 ? '$_start秒后重发' : '发送验证码',
-                style: (_start == 0 && widget.canSendCaptcha)
-                    ? Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        )
                     : null,
+                child: Text(
+                  _start > 0 ? '$_start秒后重发' : '发送验证码',
+                  style: (_start == 0 && widget.canSendCaptcha)
+                      ? Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          )
+                      : null,
+                ),
               ),
             ),
           ),

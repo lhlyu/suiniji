@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:suiniji/src/commons/utils/toast.dart';
 import 'package:suiniji/src/commons/utils/verify.dart';
 import 'package:suiniji/src/commons/widgets/picture_click_captcha/picture_click_captcha.dart';
-
-// Project imports:
 import 'package:suiniji/src/pages/login/login_controller.dart';
 import 'package:suiniji/src/pages/login/widgets/agreement_checkbox.dart';
 import 'package:suiniji/src/pages/login/widgets/captcha_input.dart';
 import 'package:suiniji/src/pages/login/widgets/footer.dart';
 import 'package:suiniji/src/pages/login/widgets/phone_input.dart';
 import 'package:suiniji/src/pages/login/widgets/show_agreement_dialog.dart';
+
+final GlobalKey<ScaffoldState> navigatorKey = GlobalKey<ScaffoldState>();
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -24,6 +26,7 @@ class LoginPage extends ConsumerWidget {
     final state = ref.watch(loginControllerProvider);
 
     return Scaffold(
+      key: navigatorKey,
       backgroundColor: Theme.of(context).cardColor,
       body: Center(
         child: Column(
@@ -49,16 +52,23 @@ class LoginPage extends ConsumerWidget {
                   Toast.error('请输入正确的手机号');
                   return false;
                 }
+
+                if (navigatorKey.currentContext == null) {
+                  return false;
+                }
                 if (!state.agreement) {
                   // 没有同意协议，需要弹出提示框
-                  final ok = await showAgreementDialog(context);
+                  final ok = await showAgreementDialog(navigatorKey.currentContext!);
                   if (ok == null || ok == false) {
                     return false;
                   }
                   action.changeAgreement(true);
                 }
 
-                final ok = await commonPictureClickCaptcha(context);
+                // error: Don't use 'BuildContext's across async gaps.
+                // Try rewriting the code to not reference the 'BuildContext'
+                // Type: Future<bool?> Function(BuildContext)
+                final ok = await commonPictureClickCaptcha(navigatorKey.currentContext!);
                 if (ok == null || ok == false) {
                   return false;
                 }

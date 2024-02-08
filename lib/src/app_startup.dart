@@ -17,7 +17,7 @@ Future<void> appStartup(AppStartupRef ref) async {
   /// 销毁时需要处理的东西
   ref.onDispose(() {});
 
-  // var delay = Future.delayed(const Duration(seconds: 2));
+  // var delay = Future.delayed(const Duration(seconds: 10));
 
   /// 这里写需要初始化的任务
   await Future.wait([

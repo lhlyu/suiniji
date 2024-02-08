@@ -7,10 +7,18 @@ class AppStartupLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
-          child: CircularProgressIndicator(),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            child: Image.asset(
+              'logo.png',
+              width: 80,
+              height: 80,
+            ),
+          ),
         ),
       ),
     );

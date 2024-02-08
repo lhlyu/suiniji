@@ -85,6 +85,7 @@ dependencies:
 
   # 吐司
   oktoast: ^3.4.0
+  flutter_gen_runner: ^5.4.0
 
 
 dev_dependencies:
@@ -110,5 +111,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/logo.png
-    - assets/test.webp
+    - assets/

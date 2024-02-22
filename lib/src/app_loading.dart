@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import 'package:suiniji/gen/assets.gen.dart';
+
 /// 加载页面
 class AppStartupLoading extends StatelessWidget {
   const AppStartupLoading({super.key});
@@ -12,9 +15,8 @@ class AppStartupLoading extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Center(
           child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            child: Image.asset(
-              'logo.png',
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            child: Assets.logo.image(
               width: 80,
               height: 80,
             ),

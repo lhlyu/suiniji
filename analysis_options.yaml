@@ -15,7 +15,6 @@ analyzer:
     - custom_lint
   errors:
     invalid_annotation_target: ignore
-  line-length: 120
 
 linter:
   rules:

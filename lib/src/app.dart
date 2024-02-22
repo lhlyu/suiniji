@@ -6,8 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/theme/dark_theme.dart';
-import 'package:suiniji/src/commons/theme/light_theme.dart';
+import 'package:suiniji/src/commons/theme/app_theme.dart';
 import 'package:suiniji/src/commons/widgets/status_bar/status_bar.dart';
 import 'package:suiniji/src/routes/app_router.dart';
 
@@ -16,11 +15,12 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appRouter = ref.watch(appRouterProvider);
+    final goRouter = ref.watch(goRouterProvider);
+
     return MaterialApp.router(
-      routerConfig: appRouter,
-      theme: lightThemeColor.theme,
-      darkTheme: darkThemeColor.theme,
+      routerConfig: goRouter,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.dartTheme,
       themeMode: ThemeMode.system,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

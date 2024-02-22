@@ -1,60 +1,61 @@
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/log/log.dart';
-import 'package:suiniji/src/pages/home/home_page.dart';
-import 'package:suiniji/src/pages/login/login_page.dart';
-import 'package:suiniji/src/pages/rift/rift_page.dart';
-import 'package:suiniji/src/pages/setting/setting_page.dart';
-import 'package:suiniji/src/pages/webview/webview_page.dart';
-import 'package:suiniji/src/routes/route.dart';
+import 'package:suiniji/src/pages/index.dart';
 
 part 'app_router.g.dart';
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
 class Routes {
-  final login = Route('login', (context, state) => const LoginPage());
-  final home = Route('home', (context, state) => const HomePage());
-  final setting = Route('setting', (context, state) => const SettingPage());
-  final rift = Route('rift', (context, state) => const RiftPage());
+  static final login = GoRoute(path: 'login', name: 'login', builder: (context, state) => const LoginPage());
+  static final creation =
+      GoRoute(path: 'creation', name: 'creation', builder: (context, state) => const CreationPage());
+  static final webview = GoRoute(path: 'webview', name: 'webview', builder: (context, state) => const WebviewPage());
 
-  final webview = Route('webview', (context, state) {
-    final title = state.uri.queryParameters['title'] ?? '';
-    final link = state.uri.queryParameters['link'] ?? '';
-    logger.i('$title, $link');
-    return WebviewPage(
-      title: title,
-      link: link,
-    );
-  });
-
-  String get root => '/login';
-
-  List<RouteBase> get routes {
-    final rs = [
+  static List<RouteBase> get routes {
+    return [
       login,
-      home,
-      setting,
-      rift,
+      creation,
       webview,
     ];
-    return rs.map((e) => e.getGoRoute).toList();
+  }
+
+  static String get initialLocation {
+    return '/';
+  }
+
+  static Widget Function(BuildContext, GoRouterState)? get errorBuilder {
+    return login.builder;
   }
 }
 
-final routes = Routes();
-
-@Riverpod()
-GoRouter appRouter(AppRouterRef ref) {
+/// 路由为什么要用riverpod
+/// 因为需要使用auth状态判断是否登录
+@riverpod
+GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: routes.root,
-    errorBuilder: routes.home.builder,
+    initialLocation: Routes.initialLocation,
+    navigatorKey: _rootNavigatorKey,
+    debugLogDiagnostics: kDebugMode,
     redirect: (context, state) {
-      logger.d("路由 -> ${state.uri}");
-
       return null;
     },
-    routes: routes.routes,
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginPage();
+        },
+        routes: Routes.routes,
+      ),
+    ],
+    errorBuilder: Routes.errorBuilder,
   );
 }

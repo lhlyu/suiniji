@@ -99,3 +99,39 @@ ThemeData ThemeData({
   Color? bottomAppBarColor, // 底部应用栏颜色
 })
 ```
+
+```dart
+const ColorScheme({
+    required this.brightness, // 主题明暗，决定是亮色主题还是暗色主题
+    required this.primary, // 主色，UI 的主要颜色
+    required this.onPrimary, // 在主色上的颜色，用于确保文字和图标的可见性
+    Color? primaryContainer, // 主色的容器色，用于在主色上创建较浅或较深的背景
+    Color? onPrimaryContainer, // 在主色容器上的颜色
+    required this.secondary, // 辅助色，用于强调和区分元素
+    required this.onSecondary, // 在辅助色上的颜色
+    Color? secondaryContainer, // 辅助色的容器色
+    Color? onSecondaryContainer, // 在辅助色容器上的颜色
+    Color? tertiary, // 第三色，用于区分与主色和辅助色不同的元素
+    Color? onTertiary, // 在第三色上的颜色
+    Color? tertiaryContainer, // 第三色的容器色
+    Color? onTertiaryContainer, // 在第三色容器上的颜色
+    required this.error, // 错误色，用于表示错误状态
+    required this.onError, // 在错误色上的颜色
+    Color? errorContainer, // 错误色的容器色
+    Color? onErrorContainer, // 在错误色容器上的颜色
+    required this.background, // 背景色，应用程序的背景色
+    required this.onBackground, // 在背景色上的颜色
+    required this.surface, // 表面色，用于卡片、对话框等元素的背景
+    required this.onSurface, // 在表面色上的颜色
+    Color? surfaceVariant, // 表面色的变种，提供更多层次或强调
+    Color? onSurfaceVariant, // 在表面色变种上的颜色
+    Color? outline, // 轮廓色，用于边框和分割线
+    Color? outlineVariant, // 轮廓色的变种
+    Color? shadow, // 阴影色，用于元素的阴影效果
+    Color? scrim, // 遮罩色，用于模态背景等遮罩效果
+    Color? inverseSurface, // 反向表面色，用于在深色背景上创建高对比度的表面
+    Color? onInverseSurface, // 在反向表面色上的颜色
+    Color? inversePrimary, // 反向主色，用于在深色背景上的主色效果
+    Color? surfaceTint, // 表面色调，为表面色添加一层色调
+  })
+```

@@ -48,6 +48,7 @@ app.*.map.json
 
 *.freezed.dart
 *.g.dart
+lib/gen
 
 flutter_cli_config.yaml
 .vscode/launch.json

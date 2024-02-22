@@ -40,6 +40,8 @@
 - [Riverpod Clean](https://otakoyi.software/blog/flutter-clean-architecture-with-riverpod-and-supabase)
 - [组件借鉴的地方](https://github.com/luo3house/flutter_vant/tree/main/vantui/lib/src/widgets)
 - [主题借鉴的地方](https://github.com/tusen-ai/naive-ui/blob/main/src/_styles/common/dark.ts)
+- [主题扩展](https://www.shirne.com/blog/flutter/flutter_extend_themedata.html)
+- [flutter_deer](https://github.com/simplezhli/flutter_deer)
 
 ### 国家条例
 

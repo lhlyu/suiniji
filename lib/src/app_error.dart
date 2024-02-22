@@ -15,16 +15,22 @@ class AppStartupError extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(message, style: Theme.of(context).textTheme.headlineSmall),
-              ElevatedButton(
-                onPressed: onRetry,
-                child: const Text('重试'),
-              ),
-            ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          shadowColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          title: const Text('发生了一些异常'),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 14,
+            ),
+            child: Text(message),
           ),
         ),
       ),

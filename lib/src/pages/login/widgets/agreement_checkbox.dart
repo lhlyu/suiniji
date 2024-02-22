@@ -5,26 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/constants/constants.dart';
+import 'package:suiniji/src/commons/constants/strings.dart';
 import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
+import 'package:suiniji/src/controllers/index.dart';
 
-/// 协议同意框
 class AgreementCheckbox extends ConsumerWidget {
-  final double width;
-  final bool agreement;
-  final void Function(bool value)? onChanged;
-
-  const AgreementCheckbox({super.key, this.width = 280, this.agreement = false, this.onChanged});
+  const AgreementCheckbox({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      width: width,
+      width: 280,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Checkbox(
+            onChanged: (value) {
+              ref.read(loginControllerProvider.notifier).updateAgreement(value!);
+            },
+            value: ref.watch(loginControllerProvider).agreement,
             side: MaterialStateBorderSide.resolveWith(
               (Set<MaterialState> states) {
                 return BorderSide(
@@ -37,17 +36,13 @@ class AgreementCheckbox extends ConsumerWidget {
               horizontal: VisualDensity.minimumDensity,
               vertical: VisualDensity.minimumDensity,
             ),
-            value: agreement,
-            onChanged: (value) {
-              onChanged!(value!);
-            },
           ),
           const SizedBox(
             width: 8,
           ),
           Expanded(
             child: CommonLinkText(
-              text: Constants.agreement,
+              text: Strings.agreement,
               textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     height: 1.6,

@@ -1,4 +1,4 @@
-class Constants {
+class Strings {
   /// 应用昵称
   static const String appName = "随你记";
 

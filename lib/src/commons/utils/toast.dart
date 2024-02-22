@@ -1,8 +1,8 @@
-// Dart imports:
-import 'dart:ui';
-
 // Package imports:
 import 'package:oktoast/oktoast.dart';
+
+// Project imports:
+import 'package:suiniji/src/commons/theme/app_theme.dart';
 
 class Toast {
   static void info(String message) {
@@ -10,7 +10,7 @@ class Toast {
       message,
       duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xFF2080F0),
+      backgroundColor: AppTheme.primaryColor,
       radius: 4,
     );
   }
@@ -20,7 +20,7 @@ class Toast {
       message,
       duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xFF18A058),
+      backgroundColor: AppTheme.successColor,
       radius: 4,
     );
   }
@@ -30,7 +30,7 @@ class Toast {
       message,
       duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xFFF0A020),
+      backgroundColor: AppTheme.warningColor,
       radius: 4,
     );
   }
@@ -40,7 +40,7 @@ class Toast {
       message,
       duration: const Duration(seconds: 3),
       position: ToastPosition.top,
-      backgroundColor: const Color(0xFFD03050),
+      backgroundColor: AppTheme.errorColor,
       radius: 4,
     );
   }

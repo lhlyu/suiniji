@@ -11,7 +11,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/constants/constants.dart';
+import 'package:suiniji/src/commons/constants/strings.dart';
 import 'package:suiniji/src/commons/log/log.dart';
 import 'package:suiniji/src/services/result.dart';
 
@@ -97,7 +97,7 @@ class HttpService {
     // 将data转换为字符串
     final dataStr = data is Map ? json.encode(SplayTreeMap<String, dynamic>.from(data)) : data.toString();
 
-    final s = '${Constants.appName}${options.method}$headerStr$paramsStr$dataStr';
+    final s = '${Strings.appName}${options.method}$headerStr$paramsStr$dataStr';
 
     final content = const Utf8Encoder().convert(s);
     final digest = md5.convert(content);

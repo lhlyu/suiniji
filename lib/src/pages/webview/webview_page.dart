@@ -6,7 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/constants/constants.dart';
+import 'package:suiniji/src/commons/constants/strings.dart';
 
 class WebviewPage extends StatelessWidget {
   final String title;
@@ -15,7 +15,7 @@ class WebviewPage extends StatelessWidget {
 
   const WebviewPage({
     super.key,
-    this.title = Constants.appName,
+    this.title = Strings.appName,
     this.link = '',
   });
 
@@ -37,7 +37,7 @@ class WebviewPage extends StatelessWidget {
           url: WebUri.uri(Uri.parse(link)),
         ),
         initialSettings: InAppWebViewSettings(
-          applicationNameForUserAgent: Constants.appName.toUpperCase(),
+          applicationNameForUserAgent: Strings.appName.toUpperCase(),
           disallowOverScroll: true,
         ),
       ),

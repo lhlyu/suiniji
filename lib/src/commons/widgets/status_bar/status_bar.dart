@@ -16,6 +16,12 @@ class CommonStatusBar extends StatelessWidget {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: isDarkMode ? Brightness.light : Brightness.dark,
     ));
-    return child;
+    return MediaQuery(
+      // 保证文字大小不受手机系统设置影响
+      data: MediaQuery.of(context).copyWith(
+        textScaler: TextScaler.noScaling,
+      ),
+      child: child,
+    );
   }
 }

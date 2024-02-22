@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:suiniji/gen/assets.gen.dart';
 
 Future<bool?> commonPictureClickCaptcha(BuildContext context) {

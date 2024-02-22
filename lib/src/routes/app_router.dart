@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:suiniji/src/commons/log/log.dart';
 
 // Project imports:
 import 'package:suiniji/src/pages/index.dart';
@@ -17,13 +18,23 @@ class Routes {
   static final login = GoRoute(path: 'login', name: 'login', builder: (context, state) => const LoginPage());
   static final creation =
       GoRoute(path: 'creation', name: 'creation', builder: (context, state) => const CreationPage());
-  static final webview = GoRoute(path: 'webview', name: 'webview', builder: (context, state) => const WebviewPage());
+  static final webview = GoRoute(
+    path: 'webview',
+    name: 'webview',
+    builder: (context, state) {
+      String? title = state.uri.queryParameters['title'] ?? '';
+      String? link = state.uri.queryParameters['link'] ?? '';
+      return WebviewPage(title: title, link: link);
+    },
+  );
+  static final rift = GoRoute(path: 'rift', name: 'rift', builder: (context, state) => const RiftPage());
 
   static List<RouteBase> get routes {
     return [
       login,
       creation,
       webview,
+      rift,
     ];
   }
 

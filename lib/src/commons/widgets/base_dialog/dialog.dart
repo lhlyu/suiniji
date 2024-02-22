@@ -21,7 +21,7 @@ Future<T?> showElasticDialog<T>({
     },
     barrierDismissible: barrierDismissible,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    transitionDuration: const Duration(milliseconds: 400),
+    transitionDuration: const Duration(milliseconds: 200),
     transitionBuilder: _buildDialogTransitions,
   );
 }

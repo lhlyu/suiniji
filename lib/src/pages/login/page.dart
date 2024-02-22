@@ -20,11 +20,11 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: [
               PhoneInput(),
-              SizedBox(height: 20),
+              SizedBox(height: 16),
               CaptchaButton(),
-              SizedBox(height: 14),
-              PasswordButton(),
               SizedBox(height: 12),
+              PasswordButton(),
+              SizedBox(height: 8),
               AgreementCheckbox(),
             ],
           ),

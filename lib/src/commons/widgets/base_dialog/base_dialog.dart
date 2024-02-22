@@ -13,7 +13,12 @@ Future<T?> commonBaseDialog<T>(
 }) {
   final children = <Widget>[];
   if (header != null) {
-    children.add(header);
+    children.add(Padding(
+      padding: const EdgeInsets.only(
+        top: 8,
+      ),
+      child: header,
+    ));
   }
   if (body != null) {
     children.add(

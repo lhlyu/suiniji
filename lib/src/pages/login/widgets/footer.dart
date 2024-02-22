@@ -1,11 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/routes/app_router.dart';
 
 class Footer extends ConsumerWidget {
   const Footer({super.key});
@@ -14,7 +16,7 @@ class Footer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
-        /// 跳转到rift
+        context.pushNamed(Routes.rift.name!);
       },
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,

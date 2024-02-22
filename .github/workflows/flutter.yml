@@ -165,11 +165,11 @@ jobs:
           cp ./build/app/outputs/flutter-apk/app-release.apk ./${{ github.event.repository.name }}.apk
           ./pgyer_upload.sh -k ${{ secrets.PGY_API_KEY }} ./${{ github.event.repository.name }}.apk
 
-      - name: Release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: "v${{ env.version }}"
-          draft: false
-          artifacts: "*.tar.gz,*.zip,build/app/outputs/flutter-apk/*.apk"
-          allowUpdates: true
-          token: ${{ secrets.TOKEN }}
+      # - name: Release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     tag: "v${{ env.version }}"
+      #     draft: false
+      #     artifacts: "*.tar.gz,*.zip,build/app/outputs/flutter-apk/*.apk"
+      #     allowUpdates: true
+      #     token: ${{ secrets.TOKEN }}

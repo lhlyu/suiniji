@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:suiniji/src/commons/constants/strings.dart';
-import 'package:suiniji/src/commons/widgets/pin_input/pin_input.dart';
+import 'package:suiniji/src/commons/widgets/pin_input/flutter_pin_code_widget.dart';
 
 class RiftPage extends StatelessWidget {
   const RiftPage({super.key});
@@ -20,8 +20,11 @@ class RiftPage extends StatelessWidget {
           },
         ),
       ),
-      body: const Center(
-        child: PinInput(),
+      body: Center(
+        child: PinCodeWidget(
+          onEnter: (String pin, PinCodeState<PinCodeWidget> state) {},
+          onChangedPin: (String pin) {},
+        ),
       ),
     );
   }

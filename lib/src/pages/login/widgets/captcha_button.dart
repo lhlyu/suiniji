@@ -32,28 +32,27 @@ class CaptchaButton extends ConsumerWidget {
           return;
         }
         action.updateAgreement(true);
-        // 判断手机号码是否合法
-        if (!state.vaildPhone(regexp: true)) {
-          Toast.error("请输入正确的手机号码");
-          return;
-        }
+      }
 
-        // 判断当前的widget是否还在
-        if (!context.mounted) {
-          return;
-        }
-
-        // API 判断手机号码是否注册，如果没有注册就跳转到注册页
-        if (state.realMobile.startsWith("11")) {
-          context.replaceNamed(Routes.register.name!);
-          return;
-        }
-
-        // 已注册跳转到短信验证码页
-        context.replaceNamed(Routes.vchaptcha.name!);
-
+      // 判断手机号码是否合法
+      if (!state.vaildPhone(regexp: true)) {
+        Toast.error("请输入正确的手机号码");
         return;
       }
+
+      // 判断当前的widget是否还在
+      if (!context.mounted) {
+        return;
+      }
+
+      // API 判断手机号码是否注册，如果没有注册就跳转到注册页
+      if (state.realMobile.startsWith("11")) {
+        context.pushNamed(Routes.register.name!);
+        return;
+      }
+
+      // 已注册跳转到短信验证码页
+      context.pushNamed(Routes.vchaptcha.name!);
     }
 
     return SizedBox(

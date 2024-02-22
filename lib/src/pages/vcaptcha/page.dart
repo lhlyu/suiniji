@@ -13,7 +13,7 @@ class VCaptchaPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(Strings.appName),
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.navigate_before),
           onPressed: () {
             /// 返回
             context.pop();

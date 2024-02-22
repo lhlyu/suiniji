@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/commons/widgets/pin_input/pin_input.dart';
 
 class RiftPage extends StatelessWidget {
   const RiftPage({super.key});
@@ -9,11 +10,10 @@ class RiftPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(Strings.appName),
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.navigate_before),
           onPressed: () {
             /// 返回
             context.pop();
@@ -21,7 +21,7 @@ class RiftPage extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: Text("裂缝"),
+        child: PinInput(),
       ),
     );
   }

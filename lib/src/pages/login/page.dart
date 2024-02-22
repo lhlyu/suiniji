@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
               CaptchaButton(),
               SizedBox(height: 14),
               PasswordButton(),
-              SizedBox(height: 14),
+              SizedBox(height: 12),
               AgreementCheckbox(),
             ],
           ),

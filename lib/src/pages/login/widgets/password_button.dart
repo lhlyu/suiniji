@@ -37,7 +37,7 @@ class PasswordButton extends ConsumerWidget {
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
         surfaceTintColor: const MaterialStatePropertyAll(Colors.transparent),
         textStyle: MaterialStatePropertyAll(
-          Theme.of(context).textTheme.bodySmall?.copyWith(
+          Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),

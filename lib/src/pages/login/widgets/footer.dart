@@ -24,7 +24,7 @@ class Footer extends ConsumerWidget {
         child: Text(
           Strings.appName,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
               ),

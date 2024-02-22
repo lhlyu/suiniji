@@ -43,11 +43,11 @@ class AgreementCheckbox extends ConsumerWidget {
           Expanded(
             child: CommonLinkText(
               text: Strings.agreement,
-              textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+              textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     height: 1.6,
                   ),
-              linkStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+              linkStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w600,
                     height: 1.6,

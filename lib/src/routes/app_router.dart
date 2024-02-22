@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:suiniji/src/commons/log/log.dart';
 
 // Project imports:
 import 'package:suiniji/src/pages/index.dart';
@@ -28,6 +27,12 @@ class Routes {
     },
   );
   static final rift = GoRoute(path: 'rift', name: 'rift', builder: (context, state) => const RiftPage());
+  static final register =
+      GoRoute(path: 'register', name: 'register', builder: (context, state) => const RegisterPage());
+  static final vchaptcha =
+      GoRoute(path: 'vchaptcha', name: 'vchaptcha', builder: (context, state) => const VCaptchaPage());
+  static final vpassword =
+      GoRoute(path: 'vpassword', name: 'vpassword', builder: (context, state) => const VPasswordPage());
 
   static List<RouteBase> get routes {
     return [
@@ -35,6 +40,9 @@ class Routes {
       creation,
       webview,
       rift,
+      register,
+      vchaptcha,
+      vpassword,
     ];
   }
 

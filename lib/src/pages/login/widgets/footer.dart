@@ -22,7 +22,7 @@ class Footer extends ConsumerWidget {
       highlightColor: Colors.transparent,
       hoverColor: Colors.transparent,
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(28),
         child: Text(
           Strings.appName,
           textAlign: TextAlign.center,

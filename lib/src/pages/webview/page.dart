@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
 import 'package:suiniji/src/commons/constants/strings.dart';
-import 'package:suiniji/src/commons/log/log.dart';
 
 class WebviewPage extends StatelessWidget {
   final String title;

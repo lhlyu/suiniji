@@ -1,5 +1,8 @@
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:suiniji/src/commons/utils/helper.dart';
+import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_agreement_dialog.dart';
 
 // Project imports:
 import 'package:suiniji/src/controllers/login/state.dart';

@@ -1,3 +1,5 @@
+import 'package:suiniji/src/commons/utils/verify.dart';
+
 /// 登录状态码
 class LoginState {
   /// 国际编码
@@ -23,7 +25,10 @@ class LoginState {
     return mobile.replaceAll(" ", "");
   }
 
-  bool get ok {
+  bool vaildPhone({bool regexp = false}) {
+    if (regexp) {
+      return isValidPhoneNumber(realMobile);
+    }
     return realMobile.length == 11;
   }
 

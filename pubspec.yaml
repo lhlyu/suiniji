@@ -86,6 +86,7 @@ dependencies:
   # 吐司
   oktoast: ^3.4.0
   flutter_gen_runner: ^5.4.0
+  input_code_field: ^2.0.2
 
 
 dev_dependencies:

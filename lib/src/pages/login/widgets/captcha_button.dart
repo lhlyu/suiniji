@@ -1,8 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
@@ -26,6 +27,7 @@ class CaptchaButton extends ConsumerWidget {
 
     // 点击后
     onPressed() async {
+      HapticFeedback.lightImpact();
       if (!state.agreement) {
         final ok = await commonConfirmAgreementDialog(context);
         if (isNullOrFalse(ok)) {

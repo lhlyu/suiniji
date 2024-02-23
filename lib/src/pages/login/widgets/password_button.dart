@@ -1,12 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:suiniji/src/commons/utils/helper.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/utils/helper.dart';
 import 'package:suiniji/src/commons/utils/toast.dart';
 import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_agreement_dialog.dart';
 import 'package:suiniji/src/controllers/index.dart';
@@ -24,6 +25,7 @@ class PasswordButton extends ConsumerWidget {
 
     // 点击后
     onPressed() async {
+      HapticFeedback.lightImpact();
       if (!state.agreement) {
         final ok = await commonConfirmAgreementDialog(context);
         if (isNullOrFalse(ok)) {

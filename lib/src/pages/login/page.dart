@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/widgets/app_footer/app_footer.dart';
 import 'package:suiniji/src/pages/login/widgets/agreement_checkbox.dart';
 import 'package:suiniji/src/pages/login/widgets/captcha_button.dart';
-import 'package:suiniji/src/pages/login/widgets/footer.dart';
 import 'package:suiniji/src/pages/login/widgets/password_button.dart';
 import 'package:suiniji/src/pages/login/widgets/phone_input.dart';
 
@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: Footer(),
+      bottomSheet: AppFooter(),
     );
   }
 }

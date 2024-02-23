@@ -1,25 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:suiniji/src/commons/log/log.dart';
+
+// Project imports:
+import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
+import 'package:suiniji/src/commons/widgets/blinking_cursor/blinking_cursor.dart';
 
 class PinInput extends StatefulWidget {
-  final int numberOfFields;
-  final double fieldWidth;
-  final EdgeInsetsGeometry margin;
-  final TextStyle? textStyle;
-  final Function(String)? onSubmit;
-  final bool autoFocus;
-  final InputDecoration? decoration;
+  final int count;
 
   const PinInput({
     super.key,
-    this.numberOfFields = 4,
-    this.fieldWidth = 40.0,
-    this.margin = const EdgeInsets.only(right: 8.0),
-    this.textStyle,
-    this.onSubmit,
-    this.autoFocus = false,
-    this.decoration,
+    this.count = 4,
   });
 
   @override
@@ -27,76 +19,118 @@ class PinInput extends StatefulWidget {
 }
 
 class _PinInputState extends State<PinInput> {
-  late List<TextEditingController> _controllers;
-  late List<FocusNode> _focusNodes;
-  late List<String> _code;
+  final FocusNode focusNode = FocusNode();
+  final TextEditingController controller = TextEditingController();
+  late List<String> codes;
+  int current = 0;
 
   @override
   void initState() {
     super.initState();
-    _controllers = List.generate(widget.numberOfFields, (_) => TextEditingController());
-    _focusNodes = List.generate(widget.numberOfFields, (_) => FocusNode());
-    _code = List.filled(widget.numberOfFields, '');
-    // 自动聚焦在第一个输入框
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FocusScope.of(context).requestFocus(_focusNodes[0]);
-    });
+    codes = List.generate(widget.count, (index) => "");
   }
 
-  @override
-  void dispose() {
-    for (var controller in _controllers) {
-      controller.dispose();
-    }
-    for (var focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
-    super.dispose();
-  }
+  Widget _buildInputWidget(int p, Color textColor) {
+    final isCurrent = p == current;
 
-  void _onChanged(String value, int index) {
-    logger.d("$index, $value");
-    setState(() {
-      _code[index] = value;
-    });
-    if (value.length == 1 && index < widget.numberOfFields - 1) {
-      FocusScope.of(context).requestFocus(_focusNodes[index + 1]);
-    } else if (value.isEmpty && index > 0) {
-      FocusScope.of(context).requestFocus(_focusNodes[index - 1]);
-    }
-
-    if (_code.join().length == widget.numberOfFields) {
-      // widget.onSubmit!(_code.join());
-    }
+    return Container(
+      height: 40,
+      width: 40,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: isCurrent ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.background,
+        border: Border.all(
+          width: 2,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        borderRadius: BorderRadiusSizes.defaultSize,
+      ),
+      child: isCurrent
+          ? const BlinkingCursor()
+          : Text(
+              codes[p],
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> fields = List.generate(
-      widget.numberOfFields,
-      (index) => SizedBox(
-        width: widget.fieldWidth,
-        child: TextField(
-          controller: _controllers[index],
-          focusNode: _focusNodes[index],
-          showCursor: true,
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          maxLength: 1,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          autofocus: widget.autoFocus,
-          decoration: const InputDecoration(
-            counterText: "",
-          ),
-          onChanged: (value) => _onChanged(value, index),
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        ),
-      ),
-    );
+    final Color textColor = Theme.of(context).primaryColor;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: fields,
+    return Stack(
+      children: [
+        TextField(
+          controller: controller,
+          focusNode: focusNode,
+          autofocus: true,
+          keyboardType: TextInputType.number,
+
+          /// 只能为数字
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            LengthLimitingTextInputFormatter(widget.count),
+          ],
+          // 隐藏光标与字体颜色，达到隐藏输入框的目的
+          cursorColor: Colors.transparent,
+          cursorWidth: 0,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            hintText: "",
+          ),
+
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.transparent),
+          onChanged: (v) {
+            for (var i = 0; i < widget.count; i++) {
+              if (i < v.length) {
+                codes[i] = v.substring(i, i + 1);
+              } else {
+                codes[i] = '';
+              }
+            }
+            if (v.isEmpty) {
+              current = 0;
+            } else {
+              current = v.length;
+            }
+            // if (v.length == _codeList.length) {
+            //   for (var i = 0; i < _codeList.length; i++) {
+            //     _codeList[i] = '';
+            //   }
+            // }
+            setState(() {});
+          },
+        ),
+        Semantics(
+          label: '点击输入',
+          child: GestureDetector(
+            onTap: () {
+              /// 一直怼，会有概率造成键盘抖动，加一个键盘时候弹出判断
+              if (MediaQuery.of(context).viewInsets.bottom < 10) {
+                final focusScope = FocusScope.of(context);
+                focusScope.unfocus();
+                Future.delayed(
+                  Duration.zero,
+                  () => focusScope.requestFocus(focusNode),
+                );
+              }
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                widget.count,
+                (i) => _buildInputWidget(
+                  i,
+                  textColor,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

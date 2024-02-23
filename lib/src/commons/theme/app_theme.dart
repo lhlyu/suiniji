@@ -19,6 +19,10 @@ class AppTheme {
         background: Colors.white,
         onBackground: Colors.black,
       ),
+      appBarTheme: const AppBarTheme(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+      ),
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -40,6 +44,10 @@ class AppTheme {
         onPrimary: Colors.white,
         background: Color(0xff282a36),
         onBackground: Color(0xfff8f8f2),
+      ),
+      appBarTheme: const AppBarTheme(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
       ),
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: Colors.transparent,

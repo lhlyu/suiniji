@@ -1,21 +1,23 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
 import 'package:suiniji/src/routes/app_router.dart';
 
-class Footer extends ConsumerWidget {
-  const Footer({super.key});
+class AppFooter extends ConsumerWidget {
+  const AppFooter({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
+        HapticFeedback.lightImpact();
         context.pushNamed(Routes.rift.name!);
       },
       splashColor: Colors.transparent,

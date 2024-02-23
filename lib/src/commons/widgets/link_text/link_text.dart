@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/utils/open_url.dart';
@@ -58,6 +59,7 @@ class CommonLinkText extends StatelessWidget {
             style: linkStyle,
             recognizer: TapGestureRecognizer()
               ..onTap = () {
+                HapticFeedback.lightImpact();
                 openUrl(context, match.group(2)!);
               },
           ),

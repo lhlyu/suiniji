@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
@@ -7,6 +8,8 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
 import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
+import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
+import 'package:suiniji/src/routes/app_router.dart';
 
 class RiftPage extends StatelessWidget {
   const RiftPage({super.key});
@@ -78,9 +81,9 @@ class RiftPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("服务协议", style: linkFontStyle),
+                CommonLinkText(text: Strings.userAgreement, linkStyle: linkFontStyle),
                 const SizedBox(width: 8),
-                Text("隐私协议", style: linkFontStyle),
+                CommonLinkText(text: Strings.privacyAgreement, linkStyle: linkFontStyle),
               ],
             ),
             const SizedBox(height: 4),
@@ -88,7 +91,11 @@ class RiftPage extends StatelessWidget {
             const SizedBox(height: 4),
             Text("Copyright © 2000 - 2024 XYZ. All Rights Reserved. ", style: fontStyle),
             const SizedBox(height: 4),
-            Text("ICP备案号：粤B1-20000000", style: fontStyle),
+            CommonLinkText(
+              text: Strings.beian,
+              textStyle: fontStyle,
+              linkStyle: fontStyle?.copyWith(decoration: TextDecoration.underline),
+            ),
           ],
         ),
       ),

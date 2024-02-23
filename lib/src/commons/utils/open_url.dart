@@ -15,7 +15,7 @@ void openUrl(BuildContext context, String url) async {
 
   /// 如果是特殊的需要打开内部webview
   if (uri.scheme == "suiniji" && uri.host == "webview") {
-    context.pushNamed(Routes.webview.name!, queryParameters: uri.queryParameters, extra: uri.queryParameters);
+    context.pushNamed(Routes.webview.name!, queryParameters: uri.queryParameters);
     return;
   }
   if (await canLaunchUrl(uri)) {

@@ -64,12 +64,12 @@ class VCaptchaPage extends StatelessWidget {
                 "短信验证码至 11293432434",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              const SizedBox(height: 44),
+              const SizedBox(height: 48),
               const SizedBox(
                 width: 220,
                 child: PinInput(),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -19,6 +20,9 @@ Future<void> main() async {
 
     /// 滚动性能优化 1.22.0
     GestureBinding.instance.resamplingEnabled = true;
+
+    /// webview调试
+    PlatformInAppWebViewController.debugLoggingSettings.enabled = kDebugMode;
 
     /// 查看哪些部件重绘了
     // debugRepaintRainbowEnabled = true;

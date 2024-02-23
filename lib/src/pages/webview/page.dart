@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/commons/log/log.dart';
 
 class WebviewPage extends StatelessWidget {
   final String title;
@@ -44,7 +45,19 @@ class WebviewPage extends StatelessWidget {
         initialSettings: InAppWebViewSettings(
           applicationNameForUserAgent: Strings.appName.toUpperCase(),
           disallowOverScroll: true,
+          javaScriptEnabled: true,
+          disableDefaultErrorPage: true,
+          sharedCookiesEnabled: true,
         ),
+        onReceivedHttpError: (controller, request, errorResponse) {
+          logger.e("onReceivedHttpError: $errorResponse");
+        },
+        onReceivedError: (controller, request, errorResponse) {
+          logger.e("onReceivedError: $errorResponse");
+        },
+        onReceivedServerTrustAuthRequest: (controller, challenge) async {
+          return ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED);
+        },
       ),
     );
   }

@@ -15,14 +15,11 @@ class AppFooter extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
         context.pushNamed(Routes.rift.name!);
       },
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      hoverColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.all(28),
         child: Text(

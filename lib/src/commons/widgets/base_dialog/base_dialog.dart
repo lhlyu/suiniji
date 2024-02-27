@@ -10,29 +10,16 @@ Future<T?> commonBaseDialog<T>(
   Widget? header,
   Widget? body,
   Widget? footer,
+  double maxWidth = 280,
 }) {
   final children = <Widget>[];
   if (header != null) {
-    children.add(Padding(
-      padding: const EdgeInsets.only(
-        top: 8,
-      ),
-      child: header,
-    ));
+    children.add(header);
   }
   if (body != null) {
-    children.add(
-      Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 24,
-        ),
-        child: body,
-      ),
-    );
+    children.add(body);
   }
   if (footer != null) {
-    children.add(const Divider());
     children.add(footer);
   }
   return showElasticDialog<T>(
@@ -44,9 +31,8 @@ Future<T?> commonBaseDialog<T>(
         ),
         elevation: 0,
         child: Container(
-          padding: const EdgeInsets.only(
-            top: 16,
-          ),
+          constraints: BoxConstraints(maxWidth: maxWidth),
+          padding: const EdgeInsets.all(0),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadiusSizes.defaultSize,

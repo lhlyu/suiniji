@@ -15,17 +15,19 @@ class Routes {
   static final login = loginRoute;
   static final creation = creationRoute;
   static final webview = webviewRoute;
-  static final rift = riftRoute;
+  static final about = aboutRoute;
   static final register = registerRoute;
   static final vchaptcha = vcaptchaRoute;
   static final vpassword = vpasswordRoute;
+
+  static final RouteObserver<PageRoute> routeObserver = RouteObserver();
 
   static List<RouteBase> get routes {
     return [
       login,
       creation,
       webview,
-      rift,
+      about,
       register,
       vchaptcha,
       vpassword,
@@ -48,6 +50,7 @@ GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
     initialLocation: Routes.initialLocation,
     debugLogDiagnostics: kDebugMode,
+    observers: [Routes.routeObserver],
     routes: [
       GoRoute(
         path: '/',
@@ -57,4 +60,14 @@ GoRouter goRouter(GoRouterRef ref) {
     ],
     errorBuilder: Routes.defaultBuilder,
   );
+}
+
+/// 给go_router扩展一个方法，跳转并清空历史栈
+extension GoRouterBuildContextExtension on BuildContext {
+  void pushReplacementNamedAndClearHistory(String name) {
+    while (GoRouter.of(this).canPop()) {
+      GoRouter.of(this).pop();
+    }
+    GoRouter.of(this).pushReplacementNamed(name);
+  }
 }

@@ -1,12 +1,7 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/utils/helper.dart';
-import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_agreement_dialog.dart';
 import 'package:suiniji/src/controllers/login/state.dart';
 
 part 'controller.g.dart';
@@ -26,7 +21,15 @@ class LoginController extends _$LoginController {
     state = state.copyWith(captcha: captcha);
   }
 
+  void updatePassword(String password) {
+    state = state.copyWith(password: password);
+  }
+
   void updateAgreement(bool agreement) {
     state = state.copyWith(agreement: agreement);
+  }
+
+  void updateLoading(bool loading) {
+    state = state.copyWith(loading: loading);
   }
 }

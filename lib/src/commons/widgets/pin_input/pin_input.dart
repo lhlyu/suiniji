@@ -8,10 +8,14 @@ import 'package:suiniji/src/commons/widgets/blinking_cursor/blinking_cursor.dart
 
 class PinInput extends StatefulWidget {
   final int count;
+  final bool disabled;
+  final ValueChanged<String>? onComplete;
 
   const PinInput({
     super.key,
-    this.count = 4,
+    this.count = 6,
+    this.disabled = false,
+    this.onComplete,
   });
 
   @override
@@ -19,8 +23,8 @@ class PinInput extends StatefulWidget {
 }
 
 class _PinInputState extends State<PinInput> {
-  final FocusNode focusNode = FocusNode();
   final TextEditingController controller = TextEditingController();
+  final FocusNode pinInputFocusNode = FocusNode();
   late List<String> codes;
   int current = 0;
 
@@ -34,24 +38,22 @@ class _PinInputState extends State<PinInput> {
     final isCurrent = p == current;
 
     return Container(
-      height: 40,
-      width: 40,
+      height: 32,
+      width: 32,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: isCurrent ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.background,
         border: Border.all(
-          width: 2,
+          width: 1,
           color: Theme.of(context).colorScheme.primary,
         ),
-        borderRadius: BorderRadiusSizes.defaultSize,
+        borderRadius: BorderRadiusSizes.sm,
       ),
       child: isCurrent
           ? const BlinkingCursor()
           : Text(
               codes[p],
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
     );
   }
@@ -64,9 +66,11 @@ class _PinInputState extends State<PinInput> {
       children: [
         TextField(
           controller: controller,
-          focusNode: focusNode,
+          focusNode: pinInputFocusNode,
           autofocus: true,
+          enabled: true,
           keyboardType: TextInputType.number,
+          readOnly: widget.disabled,
 
           /// 只能为数字
           inputFormatters: [
@@ -96,11 +100,15 @@ class _PinInputState extends State<PinInput> {
             } else {
               current = v.length;
             }
-            // if (v.length == _codeList.length) {
-            //   for (var i = 0; i < _codeList.length; i++) {
-            //     _codeList[i] = '';
-            //   }
-            // }
+            if (v.length == widget.count) {
+              HapticFeedback.lightImpact();
+              widget.onComplete!(codes.join(''));
+              current = 0;
+              controller.text = '';
+              for (var i = 0; i < widget.count; i++) {
+                codes[i] = '';
+              }
+            }
             setState(() {});
           },
         ),
@@ -114,7 +122,7 @@ class _PinInputState extends State<PinInput> {
                 focusScope.unfocus();
                 Future.delayed(
                   Duration.zero,
-                  () => focusScope.requestFocus(focusNode),
+                  () => focusScope.requestFocus(pinInputFocusNode),
                 );
               }
             },

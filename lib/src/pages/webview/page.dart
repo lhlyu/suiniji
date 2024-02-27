@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:go_router/go_router.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/commons/layouts/base_layout.dart';
 import 'package:suiniji/src/commons/log/log.dart';
 
 class WebviewPage extends StatelessWidget {
@@ -21,24 +21,9 @@ class WebviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          title.isEmpty ? Strings.appName : title,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.close_outlined),
-          onPressed: () {
-            /// 返回
-            context.pop();
-          },
-        ),
-      ),
-      body: InAppWebView(
+    return BaseLayout(
+      title: title.isEmpty ? Strings.appName : title,
+      child: InAppWebView(
         initialUrlRequest: URLRequest(
           url: WebUri.uri(Uri.parse(link)),
         ),

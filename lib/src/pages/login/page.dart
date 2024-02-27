@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:suiniji/src/commons/layouts/base_layout.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/widgets/app_footer/app_footer.dart';
 import 'package:suiniji/src/pages/login/widgets/agreement_checkbox.dart';
 import 'package:suiniji/src/pages/login/widgets/captcha_button.dart';
 import 'package:suiniji/src/pages/login/widgets/password_button.dart';
@@ -14,8 +14,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return const BaseLayout(
+      hasFooter: true,
+      child: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -30,7 +31,6 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: AppFooter(),
     );
   }
 }

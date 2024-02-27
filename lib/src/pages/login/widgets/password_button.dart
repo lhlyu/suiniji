@@ -44,6 +44,8 @@ class PasswordButton extends ConsumerWidget {
         return;
       }
 
+      action.updatePassword("");
+
       // API 判断手机号码是否注册，如果没有注册就跳转到注册页
       if (state.realMobile.startsWith("11")) {
         context.pushNamed(Routes.register.name!);

@@ -18,45 +18,43 @@ class PhoneInput extends ConsumerStatefulWidget {
 
 class _PhoneInputState extends ConsumerState<PhoneInput> {
   final controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
-    // 监听文本控制器，并在值变化时更新状态
-    controller.addListener(() {
-      ref.read(loginControllerProvider.notifier).updateMobile(controller.text);
-    });
     super.initState();
+    // Future.delayed(const Duration(milliseconds: 100), () {
+    //   focusNode.requestFocus();
+    // });
   }
 
   @override
   void dispose() {
     controller.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 
-  // 清空按钮
-  onClear() {
-    controller.clear();
-    ref.read(loginControllerProvider.notifier).updateMobile("");
-    HapticFeedback.vibrate();
-  }
-
   /// 获取清除按钮
-  Widget getClearIcon(VoidCallback? onPressed) {
-    return Consumer(
-      builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final opacity = (ref.watch(loginControllerProvider).mobile.isEmpty || onPressed == null) ? 0.0 : 1.0;
-        return Opacity(
-          opacity: opacity,
-          child: IconButton(
-            icon: const Icon(
-              Icons.clear,
-              size: 16,
-            ),
-            onPressed: onPressed,
-          ),
-        );
-      },
+  Widget getClearIcon({bool suffix = true}) {
+    final enable = ref.watch(loginControllerProvider).mobile.isNotEmpty && suffix;
+    final opacity = enable ? 1.0 : 0.0;
+
+    return Opacity(
+      opacity: opacity,
+      child: IconButton(
+        icon: const Icon(
+          Icons.clear_outlined,
+          size: 16,
+        ),
+        onPressed: enable
+            ? () {
+                controller.clear();
+                ref.read(loginControllerProvider.notifier).updateMobile("");
+                HapticFeedback.vibrate();
+              }
+            : null,
+      ),
     );
   }
 
@@ -70,19 +68,26 @@ class _PhoneInputState extends ConsumerState<PhoneInput> {
       height: 48,
       child: TextField(
         controller: controller,
+        focusNode: focusNode,
         keyboardType: TextInputType.phone,
         maxLength: 13,
+        enabled: true,
+        enableSuggestions: false,
+        autocorrect: false,
         textAlign: TextAlign.center,
         scrollPadding: EdgeInsets.zero,
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]+')),
           CustomTextInputFormatter(),
         ],
+        onChanged: (value) {
+          ref.read(loginControllerProvider.notifier).updateMobile(controller.text);
+        },
         maxLengthEnforcement: MaxLengthEnforcement.none,
         decoration: InputDecoration(
-          suffixIcon: getClearIcon(onClear),
+          suffixIcon: getClearIcon(),
           // 当存在清除按钮时，使用透明Icon作为前缀以保持文本居中
-          prefixIcon: getClearIcon(null),
+          prefixIcon: getClearIcon(suffix: false),
           filled: true,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent),
@@ -92,10 +97,7 @@ class _PhoneInputState extends ConsumerState<PhoneInput> {
             borderSide: const BorderSide(color: Colors.transparent),
             borderRadius: BorderRadiusSizes.defaultSize,
           ),
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: 12,
-            horizontal: 12,
-          ),
+          contentPadding: const EdgeInsets.all(12),
           counterText: "",
           border: InputBorder.none,
           hoverColor: Colors.transparent,

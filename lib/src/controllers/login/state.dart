@@ -12,14 +12,22 @@ class LoginState {
   /// 验证码
   final String captcha;
 
+  /// 密码
+  final String password;
+
   /// 是否同意协议
   final bool agreement;
+
+  /// 加载
+  final bool loading;
 
   const LoginState({
     this.countryCode = 86,
     this.mobile = "",
     this.captcha = "",
+    this.password = "",
     this.agreement = false,
+    this.loading = false,
   });
 
   String get realMobile {
@@ -37,13 +45,17 @@ class LoginState {
     int? countryCode,
     String? mobile,
     String? captcha,
+    String? password,
     bool? agreement,
+    bool? loading,
   }) {
     return LoginState(
       countryCode: countryCode ?? this.countryCode,
       mobile: mobile ?? this.mobile,
       captcha: captcha ?? this.captcha,
+      password: password ?? this.password,
       agreement: agreement ?? this.agreement,
+      loading: loading ?? this.loading,
     );
   }
 }

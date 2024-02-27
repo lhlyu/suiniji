@@ -18,7 +18,7 @@ class AppFooter extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
-        context.pushNamed(Routes.rift.name!);
+        context.pushNamed(Routes.about.name!);
       },
       child: Padding(
         padding: const EdgeInsets.all(28),

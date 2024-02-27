@@ -7,7 +7,5 @@ import './page.dart';
 final loginRoute = GoRoute(
   path: 'login',
   name: 'login',
-  builder: (context, state) {
-    return const LoginPage();
-  },
+  builder: (context, state) => const LoginPage(),
 );

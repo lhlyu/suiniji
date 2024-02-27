@@ -12,5 +12,5 @@ class Strings {
   static const String agreement = "新用户将自动注册账号，并同意相关 $userAgreement 和 $privacyAgreement";
 
   /// 备案信息
-  static const String beian = "ICP备案号：[粤B1-20000000](https://beian.miit.gov.cn/#/home)";
+  static const String beian = "ICP备案号：[粤B1-20000000](https://beian.miit.gov.cn)";
 }

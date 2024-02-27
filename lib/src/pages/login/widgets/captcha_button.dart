@@ -10,9 +10,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
 import 'package:suiniji/src/commons/utils/helper.dart';
 import 'package:suiniji/src/commons/utils/toast.dart';
-import 'package:suiniji/src/commons/utils/verify.dart';
 import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_agreement_dialog.dart';
+import 'package:suiniji/src/commons/widgets/picture_click_captcha/picture_click_captcha.dart';
 import 'package:suiniji/src/controllers/login/controller.dart';
+import 'package:suiniji/src/controllers/timer/controller.dart';
 import 'package:suiniji/src/routes/app_router.dart';
 
 class CaptchaButton extends ConsumerWidget {
@@ -53,7 +54,16 @@ class CaptchaButton extends ConsumerWidget {
         return;
       }
 
-      // 已注册跳转到短信验证码页
+      if (ref.watch(timerControllerProvider) == 0) {
+        await commonPictureClickCaptcha(context);
+        // 已注册跳转到短信验证码页
+        ref.read(timerControllerProvider.notifier).start();
+      }
+
+      if (!context.mounted) {
+        return;
+      }
+
       context.pushNamed(Routes.vchaptcha.name!);
     }
 

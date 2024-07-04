@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
+import 'package:suiniji/src/commons/widgets/input/input.dart';
 import 'package:suiniji/src/controllers/index.dart';
 
 class PhoneInput extends ConsumerStatefulWidget {
@@ -50,7 +50,7 @@ class _PhoneInputState extends ConsumerState<PhoneInput> {
         onPressed: enable
             ? () {
                 controller.clear();
-                ref.read(loginControllerProvider.notifier).updateMobile("");
+                ref.read(loginControllerProvider.notifier).update(mobile: "");
                 HapticFeedback.vibrate();
               }
             : null,
@@ -60,50 +60,29 @@ class _PhoneInputState extends ConsumerState<PhoneInput> {
 
   @override
   Widget build(BuildContext context) {
-    // 检查当前主题的亮度
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return SizedBox(
       width: 280,
       height: 48,
-      child: TextField(
+      child: CommonInput(
         controller: controller,
         focusNode: focusNode,
         keyboardType: TextInputType.phone,
         maxLength: 13,
-        enabled: true,
-        enableSuggestions: false,
-        autocorrect: false,
-        textAlign: TextAlign.center,
-        scrollPadding: EdgeInsets.zero,
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]+')),
           CustomTextInputFormatter(),
         ],
         onChanged: (value) {
-          ref.read(loginControllerProvider.notifier).updateMobile(controller.text);
+          ref.read(loginControllerProvider.notifier).update(mobile: controller.text);
+        },
+        onTapOutside: (event) {
+          focusNode.unfocus();
         },
         maxLengthEnforcement: MaxLengthEnforcement.none,
-        decoration: InputDecoration(
-          suffixIcon: getClearIcon(),
-          // 当存在清除按钮时，使用透明Icon作为前缀以保持文本居中
-          prefixIcon: getClearIcon(suffix: false),
-          filled: true,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadiusSizes.defaultSize,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadiusSizes.defaultSize,
-          ),
-          contentPadding: const EdgeInsets.all(12),
-          counterText: "",
-          border: InputBorder.none,
-          hoverColor: Colors.transparent,
-          fillColor: isDarkMode ? Colors.black26 : Colors.grey.shade200,
-          hintText: "请输入手机号",
-        ),
+        suffixIcon: getClearIcon(),
+        // 当存在清除按钮时，使用透明Icon作为前缀以保持文本居中
+        prefixIcon: getClearIcon(suffix: false),
+        hintText: "请输入手机号",
       ),
     );
   }
@@ -124,6 +103,7 @@ class CustomTextInputFormatter extends TextInputFormatter {
     if (oldValue.text.length <= 1 && newText.isEmpty) {
       HapticFeedback.vibrate();
     }
+
     StringBuffer buffer = StringBuffer();
     for (int i = 0; i < newText.length; i++) {
       if (i == 3 || i == 7) {
@@ -132,9 +112,23 @@ class CustomTextInputFormatter extends TextInputFormatter {
       buffer.write(newText[i]);
     }
 
+    int cursorPosition = newValue.selection.baseOffset;
+
+    if (cursorPosition > 3) {
+      cursorPosition += 1;
+    }
+
+    if (cursorPosition > 7) {
+      cursorPosition += 1;
+    }
+
+    if (cursorPosition >= buffer.toString().length) {
+      cursorPosition = buffer.toString().length;
+    }
+
     return newValue.copyWith(
       text: buffer.toString(),
-      selection: TextSelection.collapsed(offset: buffer.toString().length),
+      selection: TextSelection.collapsed(offset: cursorPosition),
     );
   }
 }

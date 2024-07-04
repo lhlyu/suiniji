@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:suiniji/src/commons/theme/page_transitions.dart';
 
+const boldTextStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+);
+
 class AppTheme {
   static Color primaryColor = const Color(0xff3b82f6);
   static Color successColor = const Color(0xff10b981);

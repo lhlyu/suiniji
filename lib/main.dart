@@ -10,7 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 
 // Project imports:
-import 'package:suiniji/src/app_startup.dart';
+import 'package:suiniji/src/app/startup.dart';
 import 'package:suiniji/src/commons/utils/handle_error.dart';
 
 Future<void> main() async {

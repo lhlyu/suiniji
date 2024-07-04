@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/routes/app_router.dart';
 
 class AppFooter extends ConsumerWidget {
@@ -25,10 +26,9 @@ class AppFooter extends ConsumerWidget {
         child: Text(
           Strings.appName,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                letterSpacing: 2,
-                fontWeight: FontWeight.bold,
-              ),
+          style: context.textTheme.titleMedium?.bold(
+            letterSpacing: 2,
+          ),
         ),
       ),
     );

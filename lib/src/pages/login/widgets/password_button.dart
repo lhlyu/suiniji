@@ -9,7 +9,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:suiniji/src/commons/utils/helper.dart';
 import 'package:suiniji/src/commons/utils/toast.dart';
+import 'package:suiniji/src/commons/widgets/button/button.dart';
 import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_agreement_dialog.dart';
+import 'package:suiniji/src/commons/widgets/picture_click_captcha/picture_click_captcha.dart';
 import 'package:suiniji/src/controllers/index.dart';
 import 'package:suiniji/src/routes/app_router.dart';
 
@@ -31,7 +33,7 @@ class PasswordButton extends ConsumerWidget {
         if (isNullOrFalse(ok)) {
           return;
         }
-        action.updateAgreement(true);
+        action.update(agreement: true);
       }
       // 判断手机号码是否合法
       if (!state.vaildPhone(regexp: true)) {
@@ -44,11 +46,30 @@ class PasswordButton extends ConsumerWidget {
         return;
       }
 
-      action.updatePassword("");
+      action.update(password: "");
 
       // API 判断手机号码是否注册，如果没有注册就跳转到注册页
+      bool has = true;
       if (state.realMobile.startsWith("11")) {
-        context.pushNamed(Routes.register.name!);
+        has = false;
+      }
+
+      action.update(has: has);
+      // 没有注册，跳转到短信验证码
+      if (!has) {
+        if (ref.watch(timerControllerProvider) == 0) {
+          final ok = await commonPictureClickCaptcha(context);
+          if (isNullOrFalse(ok)) {
+            return;
+          }
+          // 开始倒计时
+          ref.read(timerControllerProvider.notifier).start();
+        }
+        if (!context.mounted) {
+          return;
+        }
+
+        context.pushNamed(Routes.vchaptcha.name!);
         return;
       }
 
@@ -56,21 +77,12 @@ class PasswordButton extends ConsumerWidget {
       context.pushNamed(Routes.vpassword.name!);
     }
 
-    return TextButton(
-      style: ButtonStyle(
-        shadowColor: const MaterialStatePropertyAll(Colors.transparent),
-        overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-        surfaceTintColor: const MaterialStatePropertyAll(Colors.transparent),
-        textStyle: MaterialStatePropertyAll(
-          Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-      ),
-      onPressed: disabled ? null : onPressed,
-      child: const Text(
-        "密码登录",
-      ),
+    return CommonButton(
+      text: true,
+      type: "default",
+      disabled: disabled,
+      onPressed: onPressed,
+      data: "密码登录",
     );
   }
 }

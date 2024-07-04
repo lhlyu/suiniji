@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/widgets/base_dialog/base_dialog.dart';
 import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_button_group.dart';
 
@@ -22,7 +23,7 @@ Future<bool?> commonConfirmForgetPasswordDialog(BuildContext context) {
         ),
         child: Text(
           "忘记密码",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: context.textTheme.titleLarge?.bold(),
         ),
       );
     }),
@@ -31,8 +32,9 @@ Future<bool?> commonConfirmForgetPasswordDialog(BuildContext context) {
       child: Text(_tip),
     ),
     footer: const ConfirmButtonGroup(
+      ok: "需要帮助",
       cancel: "知道了",
-      order: [0],
+      order: [2, 1, 0],
     ),
   );
 }

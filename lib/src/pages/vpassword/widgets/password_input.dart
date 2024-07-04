@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
+import 'package:suiniji/src/commons/widgets/input/input.dart';
 import 'package:suiniji/src/controllers/index.dart';
 
 /// 密码输入
@@ -57,7 +57,7 @@ class _PasswordInputState extends ConsumerState<PasswordInput> {
         onPressed: enable
             ? () {
                 controller.clear();
-                ref.read(loginControllerProvider.notifier).updatePassword("");
+                ref.read(loginControllerProvider.notifier).update(password: "");
                 HapticFeedback.vibrate();
               }
             : null,
@@ -90,50 +90,27 @@ class _PasswordInputState extends ConsumerState<PasswordInput> {
 
   @override
   Widget build(BuildContext context) {
-    // 检查当前主题的亮度
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return SizedBox(
       width: 280,
       height: 48,
-      child: FocusScope(
-        child: TextField(
-          controller: controller,
-          focusNode: focusNode,
-          keyboardType: TextInputType.visiblePassword,
-          obscureText: !visibility,
-          enabled: true,
-          enableSuggestions: false,
-          autocorrect: false,
-          maxLength: 16,
-          textAlign: TextAlign.center,
-          scrollPadding: EdgeInsets.zero,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[\S]+')),
-          ],
-          onChanged: (value) {
-            ref.read(loginControllerProvider.notifier).updatePassword(value);
-          },
-          decoration: InputDecoration(
-            suffixIcon: getClearIcon(),
-            prefixIcon: getVisibilityIcon(),
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.transparent),
-              borderRadius: BorderRadiusSizes.defaultSize,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.transparent),
-              borderRadius: BorderRadiusSizes.defaultSize,
-            ),
-            contentPadding: const EdgeInsets.all(12),
-            counterText: "",
-            border: InputBorder.none,
-            hoverColor: Colors.transparent,
-            fillColor: isDarkMode ? Colors.black26 : Colors.grey.shade200,
-            hintText: "请输入密码",
-          ),
-        ),
+      child: CommonInput(
+        controller: controller,
+        focusNode: focusNode,
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: !visibility,
+        maxLength: 16,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[\S]+')),
+        ],
+        onChanged: (value) {
+          ref.read(loginControllerProvider.notifier).update(password: value);
+        },
+        onTapOutside: (event) {
+          focusNode.unfocus();
+        },
+        suffixIcon: getClearIcon(),
+        prefixIcon: getVisibilityIcon(),
+        hintText: "请输入密码",
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
 import 'package:suiniji/src/commons/widgets/blinking_cursor/blinking_cursor.dart';
 
@@ -24,7 +25,7 @@ class PinInput extends StatefulWidget {
 
 class _PinInputState extends State<PinInput> {
   final TextEditingController controller = TextEditingController();
-  final FocusNode pinInputFocusNode = FocusNode();
+  final FocusNode focusNode = FocusNode();
   late List<String> codes;
   int current = 0;
 
@@ -32,20 +33,25 @@ class _PinInputState extends State<PinInput> {
   void initState() {
     super.initState();
     codes = List.generate(widget.count, (index) => "");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        focusNode.requestFocus();
+      });
+    });
   }
 
   Widget _buildInputWidget(int p, Color textColor) {
     final isCurrent = p == current;
 
     return Container(
-      height: 32,
-      width: 32,
+      height: 36,
+      width: 36,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: isCurrent ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.background,
+        color: isCurrent ? context.colorScheme.primary : context.colorScheme.background,
         border: Border.all(
           width: 1,
-          color: Theme.of(context).colorScheme.primary,
+          color: context.colorScheme.primary,
         ),
         borderRadius: BorderRadiusSizes.sm,
       ),
@@ -53,21 +59,20 @@ class _PinInputState extends State<PinInput> {
           ? const BlinkingCursor()
           : Text(
               codes[p],
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: context.textTheme.bodyLarge?.bold(),
             ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor = Theme.of(context).primaryColor;
+    final Color textColor = context.colorScheme.primary;
 
     return Stack(
       children: [
         TextField(
           controller: controller,
-          focusNode: pinInputFocusNode,
-          autofocus: true,
+          focusNode: focusNode,
           enabled: true,
           keyboardType: TextInputType.number,
           readOnly: widget.disabled,
@@ -122,7 +127,7 @@ class _PinInputState extends State<PinInput> {
                 focusScope.unfocus();
                 Future.delayed(
                   Duration.zero,
-                  () => focusScope.requestFocus(pinInputFocusNode),
+                  () => focusScope.requestFocus(focusNode),
                 );
               }
             },

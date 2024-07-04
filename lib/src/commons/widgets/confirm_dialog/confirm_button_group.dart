@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
 
 /// 确认组合按钮
@@ -42,8 +43,8 @@ class ConfirmButtonGroup extends StatelessWidget {
         child: Text(
           cancel,
           style: TextStyle(
-            fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
-            color: Theme.of(context).colorScheme.onBackground,
+            fontSize: context.textTheme.bodyMedium?.fontSize,
+            color: context.colorScheme.onBackground,
           ),
         ),
       ),
@@ -64,7 +65,7 @@ class ConfirmButtonGroup extends StatelessWidget {
         child: Text(
           ok,
           style: TextStyle(
-            fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+            fontSize: context.textTheme.bodyMedium?.fontSize,
           ),
         ),
       ),

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
-import 'package:suiniji/src/commons/layouts/base_layout.dart';
+import 'package:suiniji/src/commons/extension/theme.dart';
+import 'package:suiniji/src/commons/layouts/base/layout.dart';
 import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
 import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
 
@@ -12,17 +13,17 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bodySmall = Theme.of(context).textTheme.bodySmall;
+    final bodySmall = context.textTheme.bodySmall;
     final fontStyle = bodySmall?.copyWith(
       color: bodySmall.color?.withOpacity(0.4),
       fontSize: 11,
     );
     final linkFontStyle = bodySmall?.copyWith(
-      color: Theme.of(context).colorScheme.primary,
+      color: context.colorScheme.primary,
       fontSize: 11,
     );
 
-    final listFontStyle = Theme.of(context).textTheme.bodyMedium;
+    final listFontStyle = context.textTheme.bodyMedium;
 
     return BaseLayout(
       title: "关于我们",
@@ -59,7 +60,7 @@ class AboutPage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               border: Border.all(
-                color: Theme.of(context).dividerTheme.color!,
+                color: context.dividerTheme.color!,
                 width: 1,
               ),
               borderRadius: BorderRadiusSizes.defaultSize,

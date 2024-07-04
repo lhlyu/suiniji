@@ -5,6 +5,7 @@ import 'dart:ui';
 
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   testWidgets('open url ...', (tester) async {
@@ -22,8 +23,16 @@ void main() {
     // /// {link: https://www.baidu.com, title: 百度}
     // print("---> ${uri.queryParameters}");
 
-    const c = Color(0xFF000000);
+    // const c = Color(0xFF000000);
 
-    print(c.withOpacity(0.2));
+    // print(c.withOpacity(0.2));
+
+    // 生成UUID版本4（随机生成）
+    final uuidV4 = const Uuid().v4();
+    print('UUID v4: $uuidV4');
+
+    // 生成UUID版本1（基于时间）
+    final uuidV1 = const Uuid().v1();
+    print('UUID v1: $uuidV1');
   });
 }

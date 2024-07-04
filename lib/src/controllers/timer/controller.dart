@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'controller.g.dart';
 
-const timeDownDuration = 10;
+const timeDownDuration = 15;
 
 @riverpod
 class TimerController extends _$TimerController {
@@ -24,11 +24,10 @@ class TimerController extends _$TimerController {
       const Duration(seconds: 1),
       (timer) {
         if (state > 0) {
-          state--;
+          state -= 1;
         } else {
           reset();
         }
-        ref.notifyListeners();
       },
     );
   }

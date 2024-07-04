@@ -7,9 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
 import 'package:suiniji/src/commons/utils/helper.dart';
 import 'package:suiniji/src/commons/utils/toast.dart';
+import 'package:suiniji/src/commons/widgets/button/button.dart';
 import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_agreement_dialog.dart';
 import 'package:suiniji/src/commons/widgets/picture_click_captcha/picture_click_captcha.dart';
 import 'package:suiniji/src/controllers/login/controller.dart';
@@ -34,7 +34,7 @@ class CaptchaButton extends ConsumerWidget {
         if (isNullOrFalse(ok)) {
           return;
         }
-        action.updateAgreement(true);
+        action.update(agreement: true);
       }
 
       // 判断手机号码是否合法
@@ -43,48 +43,39 @@ class CaptchaButton extends ConsumerWidget {
         return;
       }
 
-      // 判断当前的widget是否还在
-      if (!context.mounted) {
-        return;
-      }
-
       // API 判断手机号码是否注册，如果没有注册就跳转到注册页
       if (state.realMobile.startsWith("11")) {
-        context.pushNamed(Routes.register.name!);
-        return;
+        action.update(has: false);
+      } else {
+        action.update(has: true);
       }
 
       if (ref.watch(timerControllerProvider) == 0) {
-        await commonPictureClickCaptcha(context);
-        // 已注册跳转到短信验证码页
+        await Future.delayed(const Duration(milliseconds: 300));
+
+        if (!context.mounted) {
+          return;
+        }
+        final ok = await commonPictureClickCaptcha(context);
+        if (isNullOrFalse(ok)) {
+          return;
+        }
+        // 开始倒计时
         ref.read(timerControllerProvider.notifier).start();
       }
-
       if (!context.mounted) {
         return;
       }
-
       context.pushNamed(Routes.vchaptcha.name!);
     }
 
     return SizedBox(
       width: 280,
       height: 48,
-      child: FilledButton(
-        style: ButtonStyle(
-          elevation: const MaterialStatePropertyAll(0),
-          minimumSize: const MaterialStatePropertyAll(Size(double.infinity, double.infinity)),
-          shape: MaterialStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadiusSizes.defaultSize,
-            ),
-          ),
-          textStyle: MaterialStatePropertyAll(
-            Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-        onPressed: disabled ? null : onPressed,
-        child: const Text("验证码登录"),
+      child: CommonButton(
+        disabled: disabled,
+        onPressed: onPressed,
+        data: "验证码登录",
       ),
     );
   }

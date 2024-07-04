@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:suiniji/src/commons/layouts/base_layout.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/layouts/base/layout.dart';
 import 'package:suiniji/src/pages/login/widgets/agreement_checkbox.dart';
 import 'package:suiniji/src/pages/login/widgets/captcha_button.dart';
 import 'package:suiniji/src/pages/login/widgets/password_button.dart';

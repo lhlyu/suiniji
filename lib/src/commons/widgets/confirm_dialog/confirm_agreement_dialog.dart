@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/widgets/base_dialog/base_dialog.dart';
 import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_button_group.dart';
 import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
@@ -21,7 +22,7 @@ Future<bool?> commonConfirmAgreementDialog(BuildContext context) {
         ),
         child: Text(
           "是否同意",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: context.textTheme.titleLarge?.bold(),
         ),
       );
     }),

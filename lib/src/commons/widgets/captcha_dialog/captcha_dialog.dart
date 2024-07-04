@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
 import 'package:suiniji/src/commons/widgets/pin_input/pin_input.dart';
 import '../base_dialog/base_dialog.dart';
@@ -20,7 +21,7 @@ Future<bool?> commonCaptchaDialog(BuildContext context, String mobile) {
         ),
         child: Text(
           "短信验证",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: context.textTheme.titleLarge?.bold(),
         ),
       );
     }),
@@ -57,7 +58,7 @@ Future<bool?> commonCaptchaDialog(BuildContext context, String mobile) {
           child: Text(
             "重新发送",
             style: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+              fontSize: context.textTheme.bodyMedium?.fontSize,
             ),
           ),
         ),

@@ -43,6 +43,8 @@
 - [主题扩展](https://www.shirne.com/blog/flutter/flutter_extend_themedata.html)
 - [flutter_deer](https://github.com/simplezhli/flutter_deer)
 - [flutter_do](https://github.com/LaoMengFlutter/flutter-do)
+- [函数式编程](https://www.sandromaglione.com/articles/fpdart-riverpod-functional-programming-flutter-part-5)
+- [icons](https://fonts.google.com/icons)
 
 ### 国家条例
 

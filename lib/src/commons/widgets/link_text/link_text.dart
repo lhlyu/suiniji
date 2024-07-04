@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/utils/open_url.dart';
 
 /// 匹配链接的规则
@@ -29,11 +30,11 @@ class CommonLinkText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTextStyle = Theme.of(context).textTheme.bodyMedium;
+    final defaultTextStyle = context.textTheme.bodyMedium;
 
-    final defaultLinkStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
-        );
+    final defaultLinkStyle = context.textTheme.bodyMedium?.copyWith(
+      color: context.colorScheme.primary,
+    );
 
     return RichText(
       text: TextSpan(

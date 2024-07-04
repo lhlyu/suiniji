@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:suiniji/gen/assets.gen.dart';
+import 'package:suiniji/src/commons/extension/theme.dart';
 
 Future<bool?> commonPictureClickCaptcha(BuildContext context) {
   return showDialog<bool>(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -94,7 +96,7 @@ class _PictureClickCaptchaState extends State<_PictureClickCaptcha> {
       width: 30,
       height: 30,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
+        color: context.colorScheme.primary,
         shape: BoxShape.circle,
       ),
       child: Center(

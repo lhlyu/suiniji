@@ -3,7 +3,7 @@ name: Deno 部署
 on:
   push:
     branches:
-      - master
+      - useless
 
 jobs:
   deploy:

@@ -1,8 +1,0 @@
-{
-    "deploy": {
-      "project": "busy-lobster-82",
-      "exclude": [],
-      "include": [],
-      "entrypoint": "mock/main.ts"
-    }
-  }

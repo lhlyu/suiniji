@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/layouts/home/layout.dart';
 import 'package:suiniji/src/pages/index.dart';
 
 part 'app_router.g.dart';
@@ -16,21 +17,32 @@ class Routes {
   static final creation = creationRoute;
   static final webview = webviewRoute;
   static final about = aboutRoute;
-  static final register = registerRoute;
+  static final upassword = upasswordRoute;
   static final vchaptcha = vcaptchaRoute;
   static final vpassword = vpasswordRoute;
+  static final note = noteRoute;
+  static final profile = profileRoute;
 
   static final RouteObserver<PageRoute> routeObserver = RouteObserver();
 
   static List<RouteBase> get routes {
     return [
       login,
-      creation,
       webview,
       about,
-      register,
+      upassword,
       vchaptcha,
       vpassword,
+      ShellRoute(
+        builder: (context, state, child) {
+          return HomeLayout(child: child);
+        },
+        routes: [
+          note,
+          creation,
+          profile,
+        ],
+      ),
     ];
   }
 
@@ -60,14 +72,4 @@ GoRouter goRouter(GoRouterRef ref) {
     ],
     errorBuilder: Routes.defaultBuilder,
   );
-}
-
-/// 给go_router扩展一个方法，跳转并清空历史栈
-extension GoRouterBuildContextExtension on BuildContext {
-  void pushReplacementNamedAndClearHistory(String name) {
-    while (GoRouter.of(this).canPop()) {
-      GoRouter.of(this).pop();
-    }
-    GoRouter.of(this).pushReplacementNamed(name);
-  }
 }

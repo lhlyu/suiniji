@@ -6,7 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
-import 'package:suiniji/src/commons/layouts/base_layout.dart';
+import 'package:suiniji/src/commons/layouts/base/layout.dart';
 import 'package:suiniji/src/commons/log/log.dart';
 
 class WebviewPage extends StatelessWidget {

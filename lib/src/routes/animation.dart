@@ -14,8 +14,8 @@ class RouterTransitionFactory {
     return CustomTransitionPage(
       key: state.pageKey,
       child: child,
-      // transitionDuration: const Duration(milliseconds: 400),
-      // reverseTransitionDuration: const Duration(milliseconds: 400),
+      transitionDuration: const Duration(milliseconds: 250),
+      reverseTransitionDuration: const Duration(milliseconds: 250),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         switch (type) {
           case 'fade':

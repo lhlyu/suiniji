@@ -61,9 +61,6 @@ dependencies:
   # 网络检查
   internet_connection_checker: ^1.0.0+1
 
-  # 空的小部件
-  nil: ^1.1.1
-
   # 命令行解析
   args: ^2.4.2
 
@@ -86,7 +83,7 @@ dependencies:
   # 吐司
   oktoast: ^3.4.0
   flutter_gen_runner: ^5.4.0
-  input_code_field: ^2.0.2
+  uuid: ^4.3.3
 
 
 dev_dependencies:

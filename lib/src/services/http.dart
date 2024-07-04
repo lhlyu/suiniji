@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:collection';
 import 'dart:convert';
 
 // Flutter imports:
@@ -9,9 +8,10 @@ import 'package:flutter/foundation.dart';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:uuid/uuid.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/commons/constants/configs.dart';
 import 'package:suiniji/src/commons/log/log.dart';
 import 'package:suiniji/src/services/result.dart';
 
@@ -48,18 +48,39 @@ class HttpService {
         final ts = DateTime.now().millisecondsSinceEpoch;
         const os = "android";
         const channel = "test";
-        const nonce = 123;
+        final nonce = const Uuid().v4();
 
-        options.headers['Authorization'] = 'Bearer $token';
-        options.headers['Version'] = version;
-        options.headers['Ts'] = '$ts';
-        options.headers['Os'] = os;
-        options.headers['Channel'] = channel;
-        options.headers['Nonce'] = '$nonce';
+        final headers = {
+          'Authorization': 'Bearer $token',
+          'Version': version,
+          'Ts': '$ts',
+          'Os': os,
+          'Channel': channel,
+          'Nonce': nonce,
+        };
 
-        final header = "$token$version$ts$os$channel$nonce";
+        options.headers.addAll(headers);
 
-        options.headers['Sign'] = _getSign(header, options);
+        final Map<String, dynamic> queryParams = options.queryParameters;
+        final Map<String, dynamic> bodyParams = options.data ?? {};
+
+        final others = {
+          'method': options.method,
+          'uri': options.uri.path,
+        };
+
+        final Map<String, dynamic> allParams = {
+          'header': headers,
+          'query': queryParams,
+          'body': bodyParams,
+          'other': others,
+        };
+
+        logger.d('allParams: $allParams');
+
+        final sortedParams = _sortParams(allParams);
+
+        options.headers['Sign'] = _getSign(sortedParams, Configs.secretKey);
 
         return handler.next(options);
       },
@@ -85,22 +106,27 @@ class HttpService {
     ));
   }
 
+  /// 排序参数
+  Map<String, dynamic> _sortParams(Map<String, dynamic> params) {
+    final sortedKeys = params.keys.toList()..sort();
+    final sortedMap = <String, dynamic>{};
+    for (final key in sortedKeys) {
+      final value = params[key];
+      if (value is Map<String, dynamic>) {
+        sortedMap[key] = _sortParams(value);
+      } else {
+        sortedMap[key] = value;
+      }
+    }
+    return sortedMap;
+  }
+
   /// 获取签名
-  String _getSign(String headerStr, RequestOptions options) {
-    final params = options.queryParameters;
-    final data = options.data;
+  String _getSign(Map<String, dynamic> sortedParams, String secretKey) {
+    final jsonString = json.encode(sortedParams);
 
-    // 将params按键排序并转换为字符串
-    final sortedParams = SplayTreeMap<String, dynamic>.from(params);
-    final paramsStr = sortedParams.keys.map((key) => '$key=${sortedParams[key]}').join('&');
-
-    // 将data转换为字符串
-    final dataStr = data is Map ? json.encode(SplayTreeMap<String, dynamic>.from(data)) : data.toString();
-
-    final s = '${Strings.appName}${options.method}$headerStr$paramsStr$dataStr';
-
-    final content = const Utf8Encoder().convert(s);
-    final digest = md5.convert(content);
+    final bytes = utf8.encode(jsonString + secretKey);
+    final digest = sha256.convert(bytes);
 
     return hex.encode(digest.bytes);
   }

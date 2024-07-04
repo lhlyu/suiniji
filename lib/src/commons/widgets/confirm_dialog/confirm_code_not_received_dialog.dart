@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/widgets/base_dialog/base_dialog.dart';
 import 'package:suiniji/src/commons/widgets/confirm_dialog/confirm_button_group.dart';
 
@@ -26,7 +27,7 @@ Future<bool?> commonConfirmCodeNotReceivedDialog(BuildContext context) {
         ),
         child: Text(
           "收不到验证码",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: context.textTheme.titleLarge?.bold(),
         ),
       );
     }),
@@ -35,8 +36,8 @@ Future<bool?> commonConfirmCodeNotReceivedDialog(BuildContext context) {
       child: Text(_tip),
     ),
     footer: const ConfirmButtonGroup(
-      ok: "我需要帮助",
-      cancel: "我知道了",
+      ok: "需要帮助",
+      cancel: "知道了",
       order: [2, 1, 0],
     ),
   );

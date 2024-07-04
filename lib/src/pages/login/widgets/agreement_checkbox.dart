@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:suiniji/src/commons/constants/strings.dart';
+import 'package:suiniji/src/commons/extension/theme.dart';
 import 'package:suiniji/src/commons/widgets/link_text/link_text.dart';
 import 'package:suiniji/src/controllers/index.dart';
 
@@ -21,14 +22,14 @@ class AgreementCheckbox extends ConsumerWidget {
         children: [
           Checkbox(
             onChanged: (value) {
-              ref.read(loginControllerProvider.notifier).updateAgreement(value!);
+              ref.read(loginControllerProvider.notifier).update(agreement: value);
             },
             value: ref.watch(loginControllerProvider).agreement,
             side: MaterialStateBorderSide.resolveWith(
               (Set<MaterialState> states) {
                 return BorderSide(
                   width: 1,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: context.colorScheme.primary,
                 );
               },
             ),
@@ -43,15 +44,13 @@ class AgreementCheckbox extends ConsumerWidget {
           Expanded(
             child: CommonLinkText(
               text: Strings.agreement,
-              textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    height: 1.6,
-                  ),
-              linkStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                    height: 1.6,
-                  ),
+              textStyle: context.textTheme.bodyMedium?.bold(
+                height: 1.6,
+              ),
+              linkStyle: context.textTheme.bodyMedium?.bold(
+                color: context.colorScheme.primary,
+                height: 1.6,
+              ),
             ),
           )
         ],

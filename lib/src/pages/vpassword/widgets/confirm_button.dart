@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:suiniji/src/commons/theme/border_radius_sizes.dart';
+import 'package:suiniji/src/commons/extension/router.dart';
 import 'package:suiniji/src/commons/utils/toast.dart';
+import 'package:suiniji/src/commons/widgets/button/button.dart';
 import 'package:suiniji/src/controllers/login/controller.dart';
 import 'package:suiniji/src/routes/app_router.dart';
 
@@ -31,21 +32,10 @@ class ConfirmButton extends ConsumerWidget {
     return SizedBox(
       width: 280,
       height: 48,
-      child: FilledButton(
-        style: ButtonStyle(
-          elevation: const MaterialStatePropertyAll(0),
-          minimumSize: const MaterialStatePropertyAll(Size(double.infinity, double.infinity)),
-          shape: MaterialStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadiusSizes.defaultSize,
-            ),
-          ),
-          textStyle: MaterialStatePropertyAll(
-            Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-        onPressed: disabled ? null : onPressed,
-        child: const Text("登录"),
+      child: CommonButton(
+        disabled: disabled,
+        onPressed: onPressed,
+        data: "登录",
       ),
     );
   }

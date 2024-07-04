@@ -13,23 +13,25 @@ class LoginController extends _$LoginController {
     return const LoginState();
   }
 
-  void updateMobile(String mobile) {
-    state = state.copyWith(mobile: mobile);
-  }
-
-  void updateCaptcha(String captcha) {
-    state = state.copyWith(captcha: captcha);
-  }
-
-  void updatePassword(String password) {
-    state = state.copyWith(password: password);
-  }
-
-  void updateAgreement(bool agreement) {
-    state = state.copyWith(agreement: agreement);
-  }
-
-  void updateLoading(bool loading) {
-    state = state.copyWith(loading: loading);
+  void update({
+    int? countryCode,
+    String? mobile,
+    bool? has,
+    String? captcha,
+    String? password,
+    String? repassword,
+    bool? agreement,
+    bool? loading,
+  }) {
+    state = state.copyWith(
+      countryCode: countryCode,
+      mobile: mobile,
+      has: has,
+      captcha: captcha,
+      password: password,
+      repassword: repassword,
+      agreement: agreement,
+      loading: loading,
+    );
   }
 }
